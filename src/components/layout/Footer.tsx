@@ -15,8 +15,7 @@ export function Footer() {
               Ready to take the next step?
             </p>
             <p className="mt-2 max-w-md text-sm text-white/65 sm:text-base">
-              Speak with NovaGate Immigration about your goals, timeline, and
-              the pathway that fits your situation.
+              {`Speak with ${SITE.name} about your goals, timeline, and the pathway that fits your situation.`}
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">

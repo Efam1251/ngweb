@@ -50,7 +50,7 @@ export async function submitContactForm(payload: FormState): Promise<void> {
     body: JSON.stringify({
       access_key: accessKey,
       subject: `New consultation request — ${name} (${service})`,
-      from_name: "NovaGate Immigration Website",
+      from_name: `${SITE.shortName} Website`,
       // Reply in Gmail goes to the client
       replyto: email,
       email,

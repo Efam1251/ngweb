@@ -11,14 +11,14 @@ export function ContactPage() {
     <>
       <Seo
         title="Contact & Consultation"
-        description="Contact NovaGate Immigration to schedule a consultation. Reach our team by form, phone, or email for immigration consulting support."
+        description="Contact NovaGate ImmiServices, Llc to schedule a consultation. Reach our team by form, phone, or email for immigration consulting support."
         path="/contact"
       />
 
       <PageHero
         eyebrow="Contact"
         title="Schedule a consultation"
-        description="Tell NovaGate Immigration about your goals. We will follow up to arrange a focused conversation and outline practical next steps."
+        description="Tell NovaGate ImmiServices, Llc about your goals. We will follow up to arrange a focused conversation and outline practical next steps."
       />
 
       <section className="bg-surface-soft py-16 sm:py-20">
@@ -40,7 +40,7 @@ export function ContactPage() {
           <Reveal className="lg:col-span-5" delayMs={100}>
             <aside className="h-fit border border-line bg-navy p-7 text-white sm:p-8">
               <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-gold-soft">
-                NovaGate Immigration
+                {SITE.name}
               </p>
               <h2 className="mt-3 font-display text-3xl font-semibold">
                 Office information

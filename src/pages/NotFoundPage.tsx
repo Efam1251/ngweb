@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Seo } from "@/components/seo/Seo";
+import { SITE } from "@/data/site";
 
 export function NotFoundPage() {
   return (
     <>
       <Seo
         title="Page Not Found"
-        description="The page you requested could not be found on the NovaGate Immigration website."
+        description="The page you requested could not be found on the NovaGate ImmiServices, Llc website."
         path="/404"
       />
       <section className="flex min-h-[75dvh] items-center bg-surface-soft py-28">
@@ -16,7 +17,7 @@ export function NotFoundPage() {
             404
           </p>
           <p className="mt-4 font-display text-2xl font-semibold text-navy">
-            NovaGate Immigration
+            {SITE.name}
           </p>
           <h1 className="mt-2 font-display text-4xl font-semibold text-navy sm:text-5xl">
             Page not found

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
+import { SITE } from "@/data/site";
 
 type PageHeroProps = {
   eyebrow: string;
@@ -20,7 +21,7 @@ export function PageHero({ eyebrow, title, description, children }: PageHeroProp
             {eyebrow}
           </p>
           <p className="mt-4 font-display text-2xl font-semibold text-white/90 sm:text-3xl">
-            NovaGate Immigration
+            {SITE.name}
           </p>
           <h1 className="mt-2 max-w-3xl font-display text-4xl font-semibold leading-[1.12] tracking-tight text-balance sm:text-5xl md:text-[3.25rem]">
             {title}

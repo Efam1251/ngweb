@@ -14,12 +14,12 @@ export function ExpertiseSection() {
             <div className="absolute -inset-3 rounded-sm border border-gold/30" />
             <img
               src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1400&q=80"
-              alt="NovaGate Immigration consultants meeting with a client"
+              alt={`${SITE.name} consultants meeting with a client`}
               className="relative aspect-[4/5] w-full rounded-sm object-cover"
               loading="lazy"
             />
             <div className="absolute bottom-5 left-5 right-5 rounded-sm bg-navy/95 px-5 py-4 text-white backdrop-blur-sm">
-              <p className="font-display text-xl font-semibold">NovaGate Immigration</p>
+              <p className="font-display text-xl font-semibold">{SITE.name}</p>
               <p className="mt-1 text-sm text-white/70">
                 Nashua, NH · Serving clients nationwide
               </p>

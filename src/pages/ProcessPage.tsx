@@ -12,14 +12,14 @@ export function ProcessPage() {
     <>
       <Seo
         title="Immigration Process"
-        description="See how NovaGate Immigration guides clients through consultation, case evaluation, document preparation, application processing, and follow-up."
+        description="See how NovaGate ImmiServices, Llc guides clients through consultation, case evaluation, document preparation, application processing, and follow-up."
         path="/process"
       />
 
       <PageHero
         eyebrow="Process"
         title="Five clear steps from first call to ongoing support"
-        description="Immigration feels complicated when the path is vague. The NovaGate Immigration process keeps every stage visible, organized, and purposeful."
+        description="Immigration feels complicated when the path is vague. The NovaGate ImmiServices, Llc process keeps every stage visible, organized, and purposeful."
       />
 
       <section className="bg-pearl py-24 sm:py-28">

@@ -12,7 +12,7 @@ export function HomePage() {
   return (
     <>
       <Seo
-        description="NovaGate Immigration offers professional immigration consulting for visas, green cards, citizenship, and family immigration. Schedule a consultation today."
+        description="NovaGate ImmiServices, Llc offers professional immigration consulting for visas, green cards, citizenship, and family immigration. Schedule a consultation today."
         path="/"
       />
       <Hero />

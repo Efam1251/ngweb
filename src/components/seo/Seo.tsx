@@ -9,7 +9,7 @@ type SeoProps = {
 
 export function Seo({
   title,
-  description = "NovaGate Immigration provides professional immigration consulting for visas, green cards, citizenship, and family-based petitions.",
+  description = "NovaGate ImmiServices, Llc provides professional immigration consulting for visas, green cards, citizenship, and family-based petitions.",
   path = "",
 }: SeoProps) {
   const fullTitle = title

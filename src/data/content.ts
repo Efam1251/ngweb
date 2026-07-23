@@ -129,7 +129,7 @@ export const TESTIMONIALS = [
 export const FAQS = [
   {
     q: "Do you provide legal representation in court?",
-    a: "NovaGate Immigration provides immigration consulting and case-preparation guidance. For matters requiring attorney representation, we can help you identify when legal counsel is appropriate.",
+    a: "NovaGate ImmiServices, Llc provides immigration consulting and case-preparation guidance. For matters requiring attorney representation, we can help you identify when legal counsel is appropriate.",
   },
   {
     q: "How long does an immigration case take?",

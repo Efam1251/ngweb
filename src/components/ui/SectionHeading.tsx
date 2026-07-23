@@ -1,3 +1,5 @@
+import { SITE } from "@/data/site";
+
 type SectionHeadingProps = {
   eyebrow?: string;
   title: string;
@@ -37,7 +39,7 @@ export function SectionHeading({
             dark ? "text-white" : "text-navy"
           }`}
         >
-          NovaGate Immigration
+          {SITE.name}
         </p>
       ) : null}
       <h2

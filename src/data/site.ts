@@ -1,6 +1,6 @@
 export const SITE = {
-  name: "NovaGate Immigration",
-  shortName: "NovaGate",
+  name: "NovaGate ImmiServices, Llc",
+  shortName: "NovaGate ImmiServices",
   tagline: "Clear strategy. Disciplined preparation. Steady guidance through every milestone.",
   url: "https://novagateimmi.com",
   email: "info@novagateimmi.com",

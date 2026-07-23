@@ -26,14 +26,14 @@ export function ServicesPage() {
     <>
       <Seo
         title="Immigration Services"
-        description="Explore NovaGate Immigration services including family immigration, green card assistance, citizenship applications, visa consultation, and document preparation."
+        description="Explore NovaGate ImmiServices, Llc services including family immigration, green card assistance, citizenship applications, visa consultation, and document preparation."
         path="/services"
       />
 
       <PageHero
         eyebrow="Services"
         title="Immigration consulting tailored to your pathway"
-        description="From family petitions to citizenship preparation, each NovaGate Immigration service is designed to bring structure, clarity, and careful follow-through."
+        description="From family petitions to citizenship preparation, each NovaGate ImmiServices, Llc service is designed to bring structure, clarity, and careful follow-through."
       />
 
       <section className="bg-surface-soft py-16 sm:py-20">

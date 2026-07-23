@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Public marketing website for NovaGate Immigration",
+  "description": "Public marketing website for NovaGate ImmiServices, Llc",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

@@ -61,7 +61,7 @@ export function BrandLogo({
   }
 
   const titleCls = onDark ? "text-white" : "text-navy";
-  const subCls = onDark ? "text-white/65" : "text-muted";
+  const displayName = compact || size === "sm" ? SITE.shortName : SITE.name;
 
   return (
     <span className={`inline-flex min-w-0 items-center gap-3 ${className}`}>
@@ -70,15 +70,8 @@ export function BrandLogo({
         <span
           className={`block truncate font-display font-semibold tracking-tight ${nameSize[size]} ${titleCls}`}
         >
-          {compact ? SITE.shortName : SITE.name}
+          {displayName}
         </span>
-        {!compact && size !== "sm" ? (
-          <span
-            className={`mt-0.5 block text-[0.62rem] font-semibold uppercase tracking-[0.16em] sm:text-[0.68rem] ${subCls}`}
-          >
-            ImmiServices, LLC
-          </span>
-        ) : null}
       </span>
     </span>
   );

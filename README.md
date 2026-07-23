@@ -1,6 +1,6 @@
-# NovaGate Immigration — Public Website
+# NovaGate ImmiServices, Llc — Public Website
 
-Standalone marketing website for **NovaGate Immigration**, separate from the internal ERP and client portal applications.
+Standalone marketing website for **NovaGate ImmiServices, Llc**, separate from the internal ERP and client portal applications.
 
 **Production URL:** https://novagateimmi.com
 

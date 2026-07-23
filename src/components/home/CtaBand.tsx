@@ -10,7 +10,7 @@ type CtaBandProps = {
 
 export function CtaBand({
   title = "Begin with a private consultation",
-  description = "Share your goals with NovaGate Immigration. We will follow up to arrange a focused conversation and outline practical next steps.",
+  description = `Share your goals with ${SITE.name}. We will follow up to arrange a focused conversation and outline practical next steps.`,
 }: CtaBandProps) {
   return (
     <section className="relative overflow-hidden py-20 sm:py-24">
@@ -29,7 +29,7 @@ export function CtaBand({
         <Reveal>
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-gold-soft">
-              NovaGate Immigration
+              {SITE.name}
             </p>
             <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl md:text-5xl text-balance">
               {title}

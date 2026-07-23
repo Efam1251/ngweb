@@ -13,7 +13,7 @@ export function AboutPage() {
     <>
       <Seo
         title="About Us"
-        description="Learn about NovaGate Immigration—our mission, values, and the professional team helping clients navigate visas, residency, and citizenship with clarity."
+        description="Learn about NovaGate ImmiServices, Llc—our mission, values, and the professional team helping clients navigate visas, residency, and citizenship with clarity."
         path="/about"
       />
 
@@ -58,7 +58,7 @@ export function AboutPage() {
             <SectionHeading
               eyebrow="Mission & values"
               title="What guides every client engagement"
-              description="These principles shape how NovaGate Immigration advises, prepares, and communicates."
+              description="These principles shape how NovaGate ImmiServices, Llc advises, prepares, and communicates."
             />
           </Reveal>
           <div className="mt-14 grid gap-5 sm:grid-cols-2">

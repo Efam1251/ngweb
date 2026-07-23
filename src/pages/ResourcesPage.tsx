@@ -19,14 +19,14 @@ export function ResourcesPage() {
     <>
       <Seo
         title="Immigration Resources"
-        description="Read immigration articles, FAQs, and helpful guides from NovaGate Immigration. Practical insights for visas, green cards, citizenship, and family petitions."
+        description="Read immigration articles, FAQs, and helpful guides from NovaGate ImmiServices, Llc. Practical insights for visas, green cards, citizenship, and family petitions."
         path="/resources"
       />
 
       <PageHero
         eyebrow="Resources"
         title="Guidance, articles, and answers"
-        description="Explore practical explanations from NovaGate Immigration designed to help you prepare thoughtfully—before and during your immigration process."
+        description="Explore practical explanations from NovaGate ImmiServices, Llc designed to help you prepare thoughtfully—before and during your immigration process."
       />
 
       <section className="bg-surface-soft py-24 sm:py-28">
@@ -100,7 +100,7 @@ export function ResourcesPage() {
 
       <CtaBand
         title="Need answers specific to your case?"
-        description="Resources are a starting point. A consultation with NovaGate Immigration gives you recommendations based on your history and goals."
+        description="Resources are a starting point. A consultation with NovaGate ImmiServices, Llc gives you recommendations based on your history and goals."
       />
     </>
   );
