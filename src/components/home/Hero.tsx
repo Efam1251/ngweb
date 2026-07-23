@@ -37,8 +37,8 @@ export function Hero() {
             <Button to="/contact" variant="gold" size="lg">
               Schedule a Consultation
             </Button>
-            <Button to={SITE.portalUrl} variant="outlineDark" size="lg">
-              Client Portal
+            <Button to="/services" variant="outlineDark" size="lg">
+              Explore Our Services
             </Button>
           </div>
         </div>

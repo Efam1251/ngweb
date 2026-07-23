@@ -12,9 +12,6 @@ export const SITE = {
     { day: "Saturday", time: "By appointment" },
     { day: "Sunday", time: "Closed" },
   ],
-  portalUrl: "/portal-login",
-  /** Swap to real portal when live, e.g. https://portal.novagateimmi.com */
-  portalProductionHint: "https://portal.novagateimmi.com",
 } as const;
 
 export const NAV_LINKS = [

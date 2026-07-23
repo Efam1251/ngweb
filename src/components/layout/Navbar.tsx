@@ -74,13 +74,6 @@ export function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-2.5 lg:flex">
-          <Button
-            to={SITE.portalUrl}
-            variant={solid ? "secondary" : "outlineDark"}
-            size="sm"
-          >
-            Client Portal
-          </Button>
           <Button to="/contact" variant="gold" size="sm">
             Schedule a Consultation
           </Button>
@@ -121,9 +114,6 @@ export function Navbar() {
               </NavLink>
             ))}
             <div className="mt-3 flex flex-col gap-2.5 border-t border-line pt-4">
-              <Button to={SITE.portalUrl} variant="secondary">
-                Client Portal
-              </Button>
               <Button to="/contact" variant="gold">
                 Schedule a Consultation
               </Button>

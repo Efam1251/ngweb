@@ -6,7 +6,6 @@ import { ServicesPage } from "@/pages/ServicesPage";
 import { ProcessPage } from "@/pages/ProcessPage";
 import { ResourcesPage } from "@/pages/ResourcesPage";
 import { ContactPage } from "@/pages/ContactPage";
-import { PortalLoginPage } from "@/pages/PortalLoginPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 
 export default function App() {
@@ -20,7 +19,6 @@ export default function App() {
           <Route path="process" element={<ProcessPage />} />
           <Route path="resources" element={<ResourcesPage />} />
           <Route path="contact" element={<ContactPage />} />
-          <Route path="portal-login" element={<PortalLoginPage />} />
           <Route path="404" element={<NotFoundPage />} />
           <Route path="*" element={<Navigate to="/404" replace />} />
         </Route>

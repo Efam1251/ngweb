@@ -43,12 +43,6 @@ src/
 - **Mist / fog** — soft page atmosphere
 - **Fonts:** Libre Baskerville (display) + Source Sans 3 (body)
 
-## Client Portal button
-
-Navbar → **Client Portal Login** → `/portal-login` (placeholder).
-
-When live, point users to `https://portal.novagateimmi.com` (already linked as “Continue to Portal” on the placeholder page). Update `SITE.portalProductionHint` / links in `src/data/site.ts` as needed.
-
 ## Contact form (email without ERP)
 
 Cloudflare Pages hosts static files only — it does **not** send email by itself.
@@ -124,8 +118,7 @@ Later, when Spring Boot is online, you can switch `submitContactForm` to your AP
 | Host | App |
 |---|---|
 | `novagateimmi.com` / `www` | This marketing site |
-| `portal.novagateimmi.com` | Client portal (`System_React/apps/client-portal`) |
-| Staff app | Existing ERP host |
+| Staff ERP / portal | Hosted separately when the database backend is available |
 
 ## SEO
 
