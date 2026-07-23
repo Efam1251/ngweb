@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "Figtree", "Segoe UI", sans-serif;
+
+  --color-navy: #0a1a2f;
+  --color-navy-deep: #050e1a;
+  --color-navy-soft: #132841;
+  --color-navy-mid: #1a3554;
+  --color-ink: #141b24;
+  --color-muted: #5a6573;
+  --color-slate: #8793a3;
+  --color-fog: #e6ebf1;
+  --color-mist: #f3f5f8;
+  --color-pearl: #fafbfc;
+  --color-line: #d0d8e2;
+  --color-accent: #1f5f7a;
+  --color-accent-hover: #184c62;
+  --color-gold: #b8903a;
+  --color-gold-hover: #a37e2f;
+  --color-gold-soft: #e8d5a8;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background: var(--color-pearl);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-gold) 28%, white);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-surface-soft {
+    background:
+      radial-gradient(900px 420px at 0% 0%, rgba(184, 144, 58, 0.06), transparent 55%),
+      radial-gradient(800px 400px at 100% 10%, rgba(31, 95, 122, 0.07), transparent 50%),
+      linear-gradient(180deg, #fafbfc 0%, #f3f5f8 100%);
+  }
+
+  .bg-surface-navy {
+    background:
+      radial-gradient(700px 360px at 15% 0%, rgba(184, 144, 58, 0.14), transparent 50%),
+      radial-gradient(600px 320px at 90% 20%, rgba(31, 95, 122, 0.25), transparent 45%),
+      linear-gradient(165deg, #0a1a2f 0%, #050e1a 55%, #0f243d 100%);
+  }
+
+  .bg-grid-fade {
+    background-image:
+      linear-gradient(rgba(10, 26, 47, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10, 26, 47, 0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hairline {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--color-gold) 70%, transparent),
+      transparent
+    );
+  }
+}
