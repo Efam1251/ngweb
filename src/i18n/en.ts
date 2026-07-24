@@ -65,6 +65,8 @@ export const en = {
     sundayTime: "Closed",
   },
   hero: {
+    brandLine: "Immigration Consulting",
+    scroll: "Scroll",
     headline: "Confident guidance for life-changing immigration decisions",
     support: "Strategy, preparation, and steady support—delivered with the polish of a trusted professional firm.",
   },

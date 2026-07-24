@@ -9,7 +9,7 @@ export function Testimonials() {
   const { t } = useI18n();
 
   return (
-    <section className="border-y border-line bg-pearl py-24 sm:py-28">
+    <section className="border-y border-line bg-pearl py-24 sm:py-32">
       <Container>
         <Reveal>
           <SectionHeading
@@ -25,8 +25,12 @@ export function Testimonials() {
         <div className="mt-14 grid gap-6 lg:grid-cols-3">
           {TESTIMONIAL_IDS.map((id, index) => (
             <Reveal key={id} delayMs={index * 90}>
-              <blockquote className="flex h-full flex-col border border-line bg-white p-7 sm:p-8">
-                <Icon name="star" className="h-5 w-5 text-gold" />
+              <blockquote className="group flex h-full flex-col border border-line bg-white p-7 transition duration-500 hover:-translate-y-1 hover:border-gold/35 hover:shadow-[0_22px_45px_rgba(10,26,47,0.08)] sm:p-8">
+                <div className="flex items-center gap-1 text-gold">
+                  <Icon name="star" className="h-4 w-4" />
+                  <Icon name="star" className="h-4 w-4" />
+                  <Icon name="star" className="h-4 w-4" />
+                </div>
                 <p className="mt-5 flex-1 font-display text-xl leading-snug text-navy sm:text-[1.35rem]">
                   “{t(`testimonials.t${id}Quote`)}”
                 </p>
