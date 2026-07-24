@@ -7,14 +7,13 @@ import { ProcessPreview } from "@/components/home/ProcessPreview";
 import { Testimonials } from "@/components/home/Testimonials";
 import { CtaBand } from "@/components/home/CtaBand";
 import { Seo } from "@/components/seo/Seo";
+import { useI18n } from "@/i18n";
 
 export function HomePage() {
+  const { t } = useI18n();
   return (
     <>
-      <Seo
-        description="NovaGate ImmiServices, Llc offers professional immigration consulting for visas, green cards, citizenship, and family immigration. Schedule a consultation today."
-        path="/"
-      />
+      <Seo description={t("meta.homeDescription")} path="" />
       <Hero />
       <MetricsBar />
       <ExpertiseSection />

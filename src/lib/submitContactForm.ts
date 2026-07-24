@@ -1,32 +1,28 @@
 import type { FormState } from "@/lib/contactTypes";
 import { SITE } from "@/data/site";
-import { SERVICES } from "@/data/services";
 
 export type { FormState } from "@/lib/contactTypes";
 
-function serviceLabel(serviceId: string): string {
-  if (serviceId === "other") return "Other / Not sure";
-  const match = SERVICES.find((s) => s.id === serviceId);
-  return match?.title ?? serviceId.replace(/-/g, " ");
-}
+type SubmitOptions = {
+  serviceLabel: string;
+  locale: string;
+};
 
-function submissionSource(): string {
+function submissionSource(locale: string): string {
   if (typeof window !== "undefined" && window.location?.origin) {
-    return `${window.location.origin}/contact`;
+    return `${window.location.origin}/${locale}/contact`;
   }
-  return `${SITE.url}/contact`;
+  return `${SITE.url}/${locale}/contact`;
 }
 
 /**
- * Sends consultation requests via Web3Forms (works with Cloudflare Pages free).
- *
- * Important: Web3Forms free notifications list each JSON field as-is.
- * Do NOT send a custom `html` body — it appears as a raw "Html" field in Gmail.
- * Keep the payload to clean labeled fields only.
- *
- * Set VITE_WEB3FORMS_ACCESS_KEY in `.env` / Cloudflare Pages env vars.
+ * Sends consultation requests via Web3Forms.
+ * Keep payload to clean labeled fields only (no custom html body).
  */
-export async function submitContactForm(payload: FormState): Promise<void> {
+export async function submitContactForm(
+  payload: FormState,
+  options: SubmitOptions,
+): Promise<void> {
   const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim();
 
   if (!accessKey) {
@@ -38,7 +34,7 @@ export async function submitContactForm(payload: FormState): Promise<void> {
   const name = payload.name.trim();
   const email = payload.email.trim();
   const phone = payload.phone.trim() || "Not provided";
-  const service = serviceLabel(payload.service);
+  const service = options.serviceLabel;
   const message = payload.message.trim();
 
   const response = await fetch("https://api.web3forms.com/submit", {
@@ -51,14 +47,14 @@ export async function submitContactForm(payload: FormState): Promise<void> {
       access_key: accessKey,
       subject: `New consultation request — ${name} (${service})`,
       from_name: `${SITE.shortName} Website`,
-      // Reply in Gmail goes to the client
       replyto: email,
       email,
       "Client Name": name,
       Phone: phone,
       "Service Interest": service,
       Message: message,
-      Source: submissionSource(),
+      Language: options.locale === "es" ? "Spanish" : "English",
+      Source: submissionSource(options.locale),
     }),
   });
 

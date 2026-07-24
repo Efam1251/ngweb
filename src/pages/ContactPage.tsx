@@ -5,20 +5,29 @@ import { PageHero } from "@/components/ui/PageHero";
 import { Icon } from "@/components/ui/Icon";
 import { Seo } from "@/components/seo/Seo";
 import { SITE } from "@/data/site";
+import { useI18n } from "@/i18n";
 
 export function ContactPage() {
+  const { t } = useI18n();
+
+  const hours = [
+    { day: t("hours.weekday"), time: t("hours.weekdayTime") },
+    { day: t("hours.saturday"), time: t("hours.saturdayTime") },
+    { day: t("hours.sunday"), time: t("hours.sundayTime") },
+  ];
+
   return (
     <>
       <Seo
-        title="Contact & Consultation"
-        description="Contact NovaGate ImmiServices, Llc to schedule a consultation. Reach our team by form, phone, or email for immigration consulting support."
+        title={t("meta.contactTitle")}
+        description={t("meta.contactDescription")}
         path="/contact"
       />
 
       <PageHero
-        eyebrow="Contact"
-        title="Schedule a consultation"
-        description="Tell NovaGate ImmiServices, Llc about your goals. We will follow up to arrange a focused conversation and outline practical next steps."
+        eyebrow={t("contact.eyebrow")}
+        title={t("contact.title")}
+        description={t("contact.description")}
       />
 
       <section className="bg-surface-soft py-16 sm:py-20">
@@ -26,11 +35,9 @@ export function ContactPage() {
           <Reveal className="lg:col-span-7">
             <div className="border border-line bg-white p-6 shadow-[0_20px_50px_rgba(10,26,47,0.06)] sm:p-8">
               <h2 className="font-display text-3xl font-semibold text-navy">
-                Request a consultation
+                {t("contact.formTitle")}
               </h2>
-              <p className="mt-2 text-sm text-muted">
-                Complete the form and our team will respond promptly.
-              </p>
+              <p className="mt-2 text-sm text-muted">{t("contact.formSubtitle")}</p>
               <div className="mt-8">
                 <ContactForm />
               </div>
@@ -43,14 +50,14 @@ export function ContactPage() {
                 {SITE.name}
               </p>
               <h2 className="mt-3 font-display text-3xl font-semibold">
-                Office information
+                {t("common.officeInfo")}
               </h2>
               <dl className="mt-8 space-y-6 text-sm">
                 <div className="flex gap-3">
                   <Icon name="message" className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
                   <div>
                     <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-white/45">
-                      Email
+                      {t("common.email")}
                     </dt>
                     <dd className="mt-1">
                       <a className="font-medium text-gold-soft hover:text-white" href={`mailto:${SITE.email}`}>
@@ -63,7 +70,7 @@ export function ContactPage() {
                   <Icon name="globe" className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
                   <div>
                     <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-white/45">
-                      Phone
+                      {t("common.phone")}
                     </dt>
                     <dd className="mt-1">
                       <a className="font-medium text-white" href={SITE.phoneHref}>
@@ -76,7 +83,7 @@ export function ContactPage() {
                   <Icon name="compass" className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
                   <div>
                     <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-white/45">
-                      Address
+                      {t("common.address")}
                     </dt>
                     <dd className="mt-1 space-y-0.5 text-white/85">
                       {SITE.addressLines.map((line) => (
@@ -89,10 +96,10 @@ export function ContactPage() {
                   <Icon name="clock" className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
                   <div className="w-full">
                     <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-white/45">
-                      Business hours
+                      {t("common.hours")}
                     </dt>
                     <dd className="mt-2 space-y-2 text-white/85">
-                      {SITE.hours.map((row) => (
+                      {hours.map((row) => (
                         <div key={row.day} className="flex justify-between gap-4">
                           <span>{row.day}</span>
                           <span className="text-white/55">{row.time}</span>

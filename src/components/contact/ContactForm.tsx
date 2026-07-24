@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { SERVICES } from "@/data/services";
 import { SITE } from "@/data/site";
 import { submitContactForm, type FormState } from "@/lib/submitContactForm";
+import { useI18n } from "@/i18n";
 
 type FormErrors = Partial<Record<keyof FormState, string>>;
 
@@ -14,24 +15,11 @@ const INITIAL: FormState = {
   message: "",
 };
 
-function validate(values: FormState): FormErrors {
-  const errors: FormErrors = {};
-  if (!values.name.trim()) errors.name = "Please enter your name.";
-  if (!values.email.trim()) errors.email = "Please enter your email.";
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) {
-    errors.email = "Enter a valid email address.";
-  }
-  if (!values.service) errors.service = "Select a service.";
-  if (!values.message.trim() || values.message.trim().length < 20) {
-    errors.message = "Please share a brief message (at least 20 characters).";
-  }
-  return errors;
-}
-
 const fieldClass =
   "mt-1.5 w-full rounded-sm border border-line bg-pearl px-3.5 py-3 text-sm text-ink outline-none transition focus:border-accent focus:bg-white focus:ring-2 focus:ring-accent/15";
 
 export function ContactForm() {
+  const { t, messages, locale } = useI18n();
   const [values, setValues] = useState<FormState>(INITIAL);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
@@ -40,9 +28,27 @@ export function ContactForm() {
   const configured = Boolean(import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim());
 
   const serviceOptions = useMemo(
-    () => SERVICES.map((s) => ({ value: s.id, label: s.title })),
-    [],
+    () =>
+      SERVICES.map((s) => ({
+        value: s.id,
+        label: messages.services[s.id].title,
+      })),
+    [messages],
   );
+
+  const validate = (form: FormState): FormErrors => {
+    const next: FormErrors = {};
+    if (!form.name.trim()) next.name = t("contact.errName");
+    if (!form.email.trim()) next.email = t("contact.errEmail");
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+      next.email = t("contact.errEmailInvalid");
+    }
+    if (!form.service) next.service = t("contact.errService");
+    if (!form.message.trim() || form.message.trim().length < 20) {
+      next.message = t("contact.errMessage");
+    }
+    return next;
+  };
 
   const onChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
@@ -60,7 +66,12 @@ export function ContactForm() {
 
     setSubmitting(true);
     try {
-      await submitContactForm(values);
+      const serviceLabel =
+        values.service === "other"
+          ? t("contact.other")
+          : messages.services[values.service as keyof typeof messages.services]?.title ??
+            values.service;
+      await submitContactForm(values, { serviceLabel, locale });
       setDone(true);
       setValues(INITIAL);
     } catch (err) {
@@ -78,11 +89,10 @@ export function ContactForm() {
     return (
       <div className="border border-accent/20 bg-mist p-6 sm:p-8">
         <h3 className="font-display text-2xl font-semibold text-navy">
-          Message received
+          {t("contact.successTitle")}
         </h3>
         <p className="mt-3 text-muted">
-          Thank you for contacting {SITE.name}. Our team will review your note and
-          respond shortly. For urgent matters, call{" "}
+          {t("contact.successBody")}{" "}
           <a className="font-semibold text-accent" href={SITE.phoneHref}>
             {SITE.phone}
           </a>
@@ -94,7 +104,7 @@ export function ContactForm() {
           variant="secondary"
           onClick={() => setDone(false)}
         >
-          Send another message
+          {t("contact.sendAnother")}
         </Button>
       </div>
     );
@@ -104,9 +114,7 @@ export function ContactForm() {
     <form onSubmit={onSubmit} noValidate>
       {!configured ? (
         <p className="mb-5 rounded-sm border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
-          Contact email is not configured yet. Add{" "}
-          <code className="rounded bg-amber-100 px-1">VITE_WEB3FORMS_ACCESS_KEY</code>{" "}
-          (see README). Visitors can still reach you at{" "}
+          {t("contact.notConfigured")}{" "}
           <a className="font-semibold underline" href={`mailto:${SITE.email}`}>
             {SITE.email}
           </a>
@@ -116,7 +124,7 @@ export function ContactForm() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="block text-sm font-semibold text-navy">
-          Full name
+          {t("contact.name")}
           <input
             name="name"
             value={values.name}
@@ -128,7 +136,7 @@ export function ContactForm() {
         </label>
 
         <label className="block text-sm font-semibold text-navy">
-          Email
+          {t("contact.email")}
           <input
             name="email"
             type="email"
@@ -141,7 +149,7 @@ export function ContactForm() {
         </label>
 
         <label className="block text-sm font-semibold text-navy">
-          Phone
+          {t("contact.phone")}
           <input
             name="phone"
             type="tel"
@@ -153,20 +161,20 @@ export function ContactForm() {
         </label>
 
         <label className="block text-sm font-semibold text-navy">
-          Immigration service needed
+          {t("contact.service")}
           <select
             name="service"
             value={values.service}
             onChange={onChange}
             className={fieldClass}
           >
-            <option value="">Select a service</option>
+            <option value="">{t("contact.selectService")}</option>
             {serviceOptions.map((opt) => (
               <option key={opt.value} value={opt.value}>
                 {opt.label}
               </option>
             ))}
-            <option value="other">Other / Not sure</option>
+            <option value="other">{t("contact.other")}</option>
           </select>
           {errors.service ? (
             <span className="mt-1 block text-xs text-red-600">{errors.service}</span>
@@ -175,14 +183,14 @@ export function ContactForm() {
       </div>
 
       <label className="mt-5 block text-sm font-semibold text-navy">
-        Message
+        {t("contact.message")}
         <textarea
           name="message"
           rows={5}
           value={values.message}
           onChange={onChange}
           className={fieldClass}
-          placeholder="Tell us briefly about your immigration goals or questions."
+          placeholder={t("contact.messagePlaceholder")}
         />
         {errors.message ? (
           <span className="mt-1 block text-xs text-red-600">{errors.message}</span>
@@ -196,11 +204,9 @@ export function ContactForm() {
       ) : null}
 
       <Button type="submit" className="mt-6 w-full sm:w-auto" variant="gold" disabled={submitting}>
-        {submitting ? "Sending…" : "Request a Consultation"}
+        {submitting ? t("contact.sending") : t("contact.submit")}
       </Button>
-      <p className="mt-3 text-xs text-muted">
-        By submitting, you agree to be contacted about your inquiry. We never sell your information.
-      </p>
+      <p className="mt-3 text-xs text-muted">{t("contact.privacy")}</p>
     </form>
   );
 }

@@ -3,8 +3,11 @@ import { NAV_LINKS, SITE } from "@/data/site";
 import { Container } from "@/components/ui/Container";
 import { BrandLogo } from "@/components/brand/BrandLogo";
 import { Button } from "@/components/ui/Button";
+import { useI18n } from "@/i18n";
 
 export function Footer() {
+  const { t, pathFor } = useI18n();
+
   return (
     <footer className="relative overflow-hidden bg-navy-deep text-white">
       <div className="pointer-events-none absolute inset-0 bg-surface-navy opacity-80" />
@@ -12,18 +15,18 @@ export function Footer() {
         <Container className="flex flex-col items-start justify-between gap-8 py-12 md:flex-row md:items-center">
           <div>
             <p className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-              Ready to take the next step?
+              {t("footer.ready")}
             </p>
             <p className="mt-2 max-w-md text-sm text-white/65 sm:text-base">
-              {`Speak with ${SITE.name} about your goals, timeline, and the pathway that fits your situation.`}
+              {t("footer.readyBody")}
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Button to="/contact" variant="gold" size="lg">
-              Schedule a Consultation
+            <Button to={pathFor("contact")} variant="gold" size="lg">
+              {t("nav.schedule")}
             </Button>
-            <Button to="/services" variant="outlineDark" size="lg">
-              Explore Our Services
+            <Button to={pathFor("services")} variant="outlineDark" size="lg">
+              {t("common.exploreServices")}
             </Button>
           </div>
         </Container>
@@ -33,20 +36,19 @@ export function Footer() {
         <div>
           <BrandLogo withName onDark size="md" />
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/65">
-            {SITE.tagline} Trusted immigration consulting for families,
-            professionals, and individuals navigating U.S. pathways.
+            {t("site.tagline")} {t("site.blurb")}
           </p>
         </div>
 
         <div>
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-gold-soft">
-            Explore
+            {t("footer.explore")}
           </p>
           <ul className="mt-4 space-y-2.5 text-sm text-white/75">
             {NAV_LINKS.map((link) => (
-              <li key={link.to}>
-                <Link to={link.to} className="transition hover:text-white">
-                  {link.label}
+              <li key={link.key}>
+                <Link to={pathFor(link.to)} className="transition hover:text-white">
+                  {t(`nav.${link.key}`)}
                 </Link>
               </li>
             ))}
@@ -55,27 +57,27 @@ export function Footer() {
 
         <div>
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-gold-soft">
-            Services
+            {t("footer.services")}
           </p>
           <ul className="mt-4 space-y-2.5 text-sm text-white/75">
             <li>
-              <Link to="/services#family-immigration" className="hover:text-white">
-                Family Immigration
+              <Link to={`${pathFor("services")}#family-immigration`} className="hover:text-white">
+                {t("footer.family")}
               </Link>
             </li>
             <li>
-              <Link to="/services#green-card" className="hover:text-white">
-                Green Cards
+              <Link to={`${pathFor("services")}#green-card`} className="hover:text-white">
+                {t("footer.greenCards")}
               </Link>
             </li>
             <li>
-              <Link to="/services#citizenship" className="hover:text-white">
-                Citizenship
+              <Link to={`${pathFor("services")}#citizenship`} className="hover:text-white">
+                {t("footer.citizenship")}
               </Link>
             </li>
             <li>
-              <Link to="/services#visa-consultation" className="hover:text-white">
-                Visa Consultation
+              <Link to={`${pathFor("services")}#visa-consultation`} className="hover:text-white">
+                {t("footer.visa")}
               </Link>
             </li>
           </ul>
@@ -83,7 +85,7 @@ export function Footer() {
 
         <div>
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-gold-soft">
-            Contact
+            {t("footer.contact")}
           </p>
           <ul className="mt-4 space-y-2.5 text-sm text-white/75">
             <li>
@@ -106,9 +108,9 @@ export function Footer() {
       <div className="relative border-t border-white/10">
         <Container className="flex flex-col gap-2 py-5 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {SITE.name}. All rights reserved.
+            © {new Date().getFullYear()} {SITE.name}. {t("common.rightsReserved")}
           </p>
-          <p>Professional immigration consulting. Not a law firm.</p>
+          <p>{t("common.notLawFirm")}</p>
         </Container>
       </div>
     </footer>

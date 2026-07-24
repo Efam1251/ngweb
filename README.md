@@ -43,6 +43,16 @@ src/
 - **Mist / fog** — soft page atmosphere
 - **Fonts:** Libre Baskerville (display) + Source Sans 3 (body)
 
+## Languages (English / Spanish)
+
+The site is bilingual with URL prefixes:
+
+- English: `/en`, `/en/about`, `/en/contact`, …
+- Spanish: `/es`, `/es/about`, `/es/contact`, …
+
+`/` redirects to `/en` or `/es` based on saved preference or browser language.
+Use the **EN | ES** control in the navbar to switch. Copy lives in `src/i18n/en.ts` and `src/i18n/es.ts`.
+
 ## Contact form (email without ERP)
 
 Cloudflare Pages hosts static files only — it does **not** send email by itself.

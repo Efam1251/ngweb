@@ -1,12 +1,14 @@
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { BrandLogo } from "@/components/brand/BrandLogo";
-import { SITE } from "@/data/site";
+import { useI18n } from "@/i18n";
 
 const HERO_IMAGE =
   "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=2400&q=80";
 
 export function Hero() {
+  const { t, pathFor } = useI18n();
+
   return (
     <section className="relative min-h-[100dvh] overflow-hidden bg-navy-deep">
       <img
@@ -25,20 +27,19 @@ export function Hero() {
           <div className="mt-8 h-px w-20 bg-gradient-to-r from-gold to-transparent" />
 
           <h1 className="mt-8 font-display text-[2.15rem] font-semibold leading-[1.12] tracking-tight text-white sm:text-5xl md:text-[3.35rem] text-balance">
-            Confident guidance for life-changing immigration decisions
+            {t("hero.headline")}
           </h1>
 
           <p className="mt-5 max-w-xl text-base leading-relaxed text-white/78 sm:text-lg">
-            {SITE.tagline} Strategy, preparation, and steady support—delivered
-            with the polish of a trusted professional firm.
+            {t("site.tagline")} {t("hero.support")}
           </p>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button to="/contact" variant="gold" size="lg">
-              Schedule a Consultation
+            <Button to={pathFor("contact")} variant="gold" size="lg">
+              {t("nav.schedule")}
             </Button>
-            <Button to="/services" variant="outlineDark" size="lg">
-              Explore Our Services
+            <Button to={pathFor("services")} variant="outlineDark" size="lg">
+              {t("common.exploreServices")}
             </Button>
           </div>
         </div>

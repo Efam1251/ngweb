@@ -9,37 +9,38 @@ import { Icon } from "@/components/ui/Icon";
 import { Seo } from "@/components/seo/Seo";
 import { CtaBand } from "@/components/home/CtaBand";
 import { SERVICES } from "@/data/services";
+import { useI18n } from "@/i18n";
 
 export function ServicesPage() {
   const location = useLocation();
+  const { t, pathFor, messages } = useI18n();
 
   useEffect(() => {
     if (!location.hash) return;
     const id = location.hash.replace("#", "");
     const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [location.hash]);
 
   return (
     <>
       <Seo
-        title="Immigration Services"
-        description="Explore NovaGate ImmiServices, Llc services including family immigration, green card assistance, citizenship applications, visa consultation, and document preparation."
+        title={t("meta.servicesTitle")}
+        description={t("meta.servicesDescription")}
         path="/services"
       />
 
       <PageHero
-        eyebrow="Services"
-        title="Immigration consulting tailored to your pathway"
-        description="From family petitions to citizenship preparation, each NovaGate ImmiServices, Llc service is designed to bring structure, clarity, and careful follow-through."
+        eyebrow={t("servicesPage.eyebrow")}
+        title={t("servicesPage.title")}
+        description={t("servicesPage.description")}
       />
 
       <section className="bg-surface-soft py-16 sm:py-20">
         <Container className="space-y-24">
           {SERVICES.map((service, index) => {
             const reverse = index % 2 === 1;
+            const copy = messages.services[service.id];
             return (
               <article
                 key={service.id}
@@ -53,13 +54,13 @@ export function ServicesPage() {
                   <div className="relative overflow-hidden">
                     <img
                       src={service.image}
-                      alt={service.imageAlt}
+                      alt={copy.imageAlt}
                       className="aspect-[16/11] w-full object-cover"
                       loading="lazy"
                     />
                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy/80 to-transparent px-5 py-4">
                       <p className="font-display text-2xl font-semibold text-white">
-                        {service.title}
+                        {copy.title}
                       </p>
                     </div>
                   </div>
@@ -69,32 +70,29 @@ export function ServicesPage() {
                   delayMs={100}
                 >
                   <SectionHeading
-                    eyebrow={`Service 0${index + 1}`}
-                    title={service.title}
-                    description={service.description}
+                    eyebrow={`${t("common.service")} 0${index + 1}`}
+                    title={copy.title}
+                    description={copy.description}
                   />
                   <div className="mt-7">
                     <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-accent">
-                      What you receive
+                      {t("common.whatYouReceive")}
                     </p>
                     <ul className="mt-4 space-y-3 text-sm leading-relaxed text-muted sm:text-base">
-                      {service.benefits.map((benefit) => (
+                      {copy.benefits.map((benefit) => (
                         <li key={benefit} className="flex gap-3">
-                          <Icon
-                            name="check"
-                            className="mt-0.5 h-4 w-4 shrink-0 text-gold"
-                          />
+                          <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
                           <span>{benefit}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                   <p className="mt-7 border-l-2 border-gold/60 bg-white/80 px-4 py-3 text-sm leading-relaxed text-navy/85">
-                    <span className="font-semibold text-navy">Who it is for: </span>
-                    {service.whoFor}
+                    <span className="font-semibold text-navy">{t("common.whoFor")} </span>
+                    {copy.whoFor}
                   </p>
-                  <Button to="/contact" variant="gold" className="mt-8">
-                    Schedule a Consultation
+                  <Button to={pathFor("contact")} variant="gold" className="mt-8">
+                    {t("nav.schedule")}
                     <Icon name="arrow" className="h-4 w-4" />
                   </Button>
                 </Reveal>

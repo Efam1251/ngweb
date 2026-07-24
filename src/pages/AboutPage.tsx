@@ -5,45 +5,43 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PageHero } from "@/components/ui/PageHero";
 import { Icon } from "@/components/ui/Icon";
 import { Seo } from "@/components/seo/Seo";
-import { TEAM, VALUES } from "@/data/content";
-import { SITE } from "@/data/site";
+import { TEAM, VALUE_IDS } from "@/data/content";
+import { useI18n } from "@/i18n";
 
 export function AboutPage() {
+  const { t } = useI18n();
+
   return (
     <>
       <Seo
-        title="About Us"
-        description="Learn about NovaGate ImmiServices, Llc—our mission, values, and the professional team helping clients navigate visas, residency, and citizenship with clarity."
+        title={t("meta.aboutTitle")}
+        description={t("meta.aboutDescription")}
         path="/about"
       />
 
       <PageHero
-        eyebrow="About the firm"
-        title="Built to bring clarity to immigration journeys"
-        description={`${SITE.name} was founded on a simple belief: people deserve thoughtful guidance when the stakes are high and the process feels overwhelming.`}
+        eyebrow={t("about.eyebrow")}
+        title={t("about.title")}
+        description={t("about.heroDescription")}
       />
 
       <section className="bg-surface-soft py-24 sm:py-28">
         <Container className="grid items-center gap-14 lg:grid-cols-12">
           <Reveal className="lg:col-span-6">
             <SectionHeading
-              eyebrow="Our story"
+              eyebrow={t("about.storyEyebrow")}
               brand
-              title="From complexity to a plan you can follow"
-              description="Clients often arrive with unanswered questions, incomplete paperwork, or years of uncertainty. We start by listening—then translate goals into a structured evaluation and preparation plan."
+              title={t("about.storyTitle")}
+              description={t("about.storyDescription")}
             />
-            <p className="mt-5 leading-relaxed text-muted">
-              Our consulting approach emphasizes honesty, organization, and
-              education. You should understand not only the next form to file,
-              but the reasoning behind each recommendation.
-            </p>
+            <p className="mt-5 leading-relaxed text-muted">{t("about.storyBody")}</p>
           </Reveal>
           <Reveal className="lg:col-span-6" delayMs={100}>
             <div className="relative">
               <div className="absolute -left-3 -top-3 h-full w-full border border-gold/35" />
               <img
                 src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1400&q=80"
-                alt="Professional consultation handshake"
+                alt={t("about.imageAlt")}
                 className="relative aspect-[4/3] w-full object-cover"
                 loading="lazy"
               />
@@ -56,23 +54,23 @@ export function AboutPage() {
         <Container>
           <Reveal>
             <SectionHeading
-              eyebrow="Mission & values"
-              title="What guides every client engagement"
-              description="These principles shape how NovaGate ImmiServices, Llc advises, prepares, and communicates."
+              eyebrow={t("about.valuesEyebrow")}
+              title={t("about.valuesTitle")}
+              description={t("about.valuesDescription")}
             />
           </Reveal>
           <div className="mt-14 grid gap-5 sm:grid-cols-2">
-            {VALUES.map((value, index) => (
-              <Reveal key={value.title} delayMs={index * 70}>
+            {VALUE_IDS.map((id, index) => (
+              <Reveal key={id} delayMs={index * 70}>
                 <article className="h-full border border-line bg-white p-7 transition hover:border-navy/20 sm:p-8">
                   <div className="flex h-10 w-10 items-center justify-center border border-gold/50 text-accent">
                     <Icon name="check" className="h-5 w-5" />
                   </div>
                   <h3 className="mt-5 font-display text-2xl font-semibold text-navy">
-                    {value.title}
+                    {t(`about.v${id}Title`)}
                   </h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
-                    {value.text}
+                    {t(`about.v${id}Text`)}
                   </p>
                 </article>
               </Reveal>
@@ -85,20 +83,16 @@ export function AboutPage() {
         <Container>
           <Reveal>
             <SectionHeading
-              eyebrow="Why clients trust us"
-              title="Professionalism without intimidation"
-              description="Immigration decisions affect families, careers, and futures. We combine disciplined preparation with approachable communication so clients never feel left in the dark."
+              eyebrow={t("about.trustEyebrow")}
+              title={t("about.trustTitle")}
+              description={t("about.trustDescription")}
             />
           </Reveal>
           <div className="mt-12 grid gap-4 sm:grid-cols-3">
-            {[
-              "Transparent recommendations",
-              "Organized document support",
-              "Responsive case follow-up",
-            ].map((item, index) => (
-              <Reveal key={item} delayMs={index * 60}>
+            {[1, 2, 3].map((id, index) => (
+              <Reveal key={id} delayMs={index * 60}>
                 <div className="border-l-2 border-gold bg-white px-5 py-5 text-sm font-semibold text-navy shadow-[0_12px_30px_rgba(10,26,47,0.04)]">
-                  {item}
+                  {t(`about.trust${id}`)}
                 </div>
               </Reveal>
             ))}
@@ -110,31 +104,31 @@ export function AboutPage() {
         <Container>
           <Reveal>
             <SectionHeading
-              eyebrow="Our team"
+              eyebrow={t("about.teamEyebrow")}
               brand
-              title="Experienced advisors, personal attention"
+              title={t("about.teamTitle")}
             />
           </Reveal>
           <div className="mt-14 grid gap-8 md:grid-cols-3">
             {TEAM.map((member, index) => (
-              <Reveal key={member.name} delayMs={index * 80}>
+              <Reveal key={member.id} delayMs={index * 80}>
                 <article className="group">
                   <div className="overflow-hidden">
                     <img
                       src={member.image}
-                      alt={member.name}
+                      alt={t(`about.member${member.id}Name`)}
                       className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.03]"
                       loading="lazy"
                     />
                   </div>
                   <h3 className="mt-5 font-display text-2xl font-semibold text-navy">
-                    {member.name}
+                    {t(`about.member${member.id}Name`)}
                   </h3>
                   <p className="mt-1 text-sm font-semibold uppercase tracking-[0.12em] text-accent">
-                    {member.role}
+                    {t(`about.member${member.id}Role`)}
                   </p>
                   <p className="mt-3 text-sm leading-relaxed text-muted">
-                    {member.bio}
+                    {t(`about.member${member.id}Bio`)}
                   </p>
                 </article>
               </Reveal>
@@ -143,7 +137,7 @@ export function AboutPage() {
         </Container>
       </section>
 
-      <CtaBand title="Let’s talk about your goals" />
+      <CtaBand title={t("about.ctaTitle")} />
     </>
   );
 }
