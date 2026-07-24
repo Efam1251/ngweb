@@ -10,7 +10,7 @@ export function ProcessPreview() {
   const { t, pathFor } = useI18n();
 
   return (
-    <section className="bg-mist py-24 sm:py-32">
+    <section className="bg-mist py-24 sm:py-28">
       <Container>
         <Reveal>
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
@@ -29,8 +29,8 @@ export function ProcessPreview() {
         <ol className="mt-14 grid gap-4 lg:grid-cols-5">
           {PROCESS_STEP_IDS.map((step, index) => (
             <Reveal key={step} delayMs={index * 70}>
-              <li className="group relative flex h-full flex-col border border-line bg-white p-6 transition duration-500 hover:-translate-y-1 hover:border-navy/20 hover:shadow-[0_20px_40px_rgba(10,26,47,0.08)]">
-                <span className="font-display text-4xl font-semibold text-gold/75 transition group-hover:text-gold">
+              <li className="relative flex h-full flex-col border border-line bg-white p-6">
+                <span className="font-display text-4xl font-semibold text-gold/80">
                   {String(step).padStart(2, "0")}
                 </span>
                 <h3 className="mt-4 font-display text-xl font-semibold text-navy">

@@ -12,7 +12,7 @@ const variants: Record<ButtonVariant, string> = {
   ghost: "bg-transparent text-navy hover:bg-fog/80",
   onDark:
     "bg-white text-navy hover:bg-pearl border border-white/0",
-  gold: "bg-gold text-navy-deep hover:bg-gold-hover shadow-[0_1px_0_rgba(255,255,255,0.2)_inset] hover:shadow-[0_10px_24px_rgba(184,144,58,0.28)]",
+  gold: "bg-gold text-navy-deep hover:bg-gold-hover shadow-[0_1px_0_rgba(255,255,255,0.2)_inset]",
   outlineDark:
     "bg-transparent text-white border border-white/35 hover:border-white hover:bg-white/10",
 };
@@ -46,7 +46,7 @@ export function Button({
   onClick,
   disabled,
 }: ButtonProps) {
-  const classes = `inline-flex items-center justify-center gap-2 rounded-sm font-semibold tracking-[0.01em] transition duration-300 hover:-translate-y-px focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold disabled:opacity-60 ${variants[variant]} ${sizes[size]} ${className}`;
+  const classes = `inline-flex items-center justify-center gap-2 rounded-sm font-semibold tracking-[0.01em] transition duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold disabled:opacity-60 ${variants[variant]} ${sizes[size]} ${className}`;
 
   if (to) {
     return (

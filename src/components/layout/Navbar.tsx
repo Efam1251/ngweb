@@ -45,9 +45,9 @@ export function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <Container className="flex h-[5.25rem] items-center justify-between gap-4 lg:h-[5.75rem]">
+      <Container className="flex h-[4.75rem] items-center justify-between gap-4 lg:h-[5.25rem]">
         <Link to={pathFor()} className="flex min-w-0 items-center" aria-label={SITE.name}>
-          <BrandLogo withName onDark={!solid} size="md" className="min-w-0" />
+          <BrandLogo withName onDark={!solid} size="sm" className="min-w-0" />
         </Link>
 
         <nav className="hidden items-center gap-0.5 xl:flex">

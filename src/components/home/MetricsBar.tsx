@@ -7,26 +7,21 @@ export function MetricsBar() {
   const { t } = useI18n();
 
   return (
-    <section id="home-metrics" className="relative z-10 -mt-12 scroll-mt-28 sm:-mt-16">
+    <section className="relative z-10 -mt-10 sm:-mt-14">
       <Container>
         <Reveal>
-          <div className="grid grid-cols-2 overflow-hidden rounded-sm border border-white/20 bg-white shadow-[0_28px_60px_rgba(10,26,47,0.16)] md:grid-cols-4">
-            {METRIC_IDS.map((id, index) => (
+          <div className="grid grid-cols-2 gap-px overflow-hidden rounded-sm border border-line/80 bg-line/80 shadow-[0_20px_50px_rgba(10,26,47,0.12)] md:grid-cols-4">
+            {METRIC_IDS.map((id) => (
               <div
                 key={id}
-                className={`group bg-pearl px-5 py-8 text-center transition duration-500 hover:bg-white sm:px-6 sm:py-10 ${
-                  index > 0 ? "border-l border-line/70" : ""
-                } ${index === 2 ? "border-t border-line/70 md:border-t-0" : ""} ${
-                  index === 3 ? "border-t border-line/70 md:border-t-0" : ""
-                }`}
+                className="bg-pearl px-5 py-7 text-center sm:px-6 sm:py-8"
               >
-                <p className="font-display text-3xl font-semibold tracking-tight text-navy transition duration-500 group-hover:text-accent sm:text-4xl md:text-[2.75rem]">
+                <p className="font-display text-3xl font-semibold tracking-tight text-navy sm:text-4xl">
                   {t(`metrics.m${id}Value`)}
                 </p>
-                <p className="mx-auto mt-2 max-w-[12rem] text-xs leading-snug text-muted sm:text-sm">
+                <p className="mt-2 text-xs leading-snug text-muted sm:text-sm">
                   {t(`metrics.m${id}Label`)}
                 </p>
-                <div className="mx-auto mt-4 h-px w-8 origin-center scale-x-0 bg-gold transition duration-500 group-hover:scale-x-100" />
               </div>
             ))}
           </div>

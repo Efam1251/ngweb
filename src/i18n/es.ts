@@ -66,8 +66,6 @@ export const es = {
     sundayTime: "Cerrado",
   },
   hero: {
-    brandLine: "Consultoría de Inmigración",
-    scroll: "Explorar",
     headline: "Orientación confiable para decisiones migratorias que cambian la vida",
     support: "Estrategia, preparación y acompañamiento constante—con la solidez de una firma profesional de confianza.",
   },
