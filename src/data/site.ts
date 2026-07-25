@@ -16,7 +16,7 @@ export const SOCIAL_LINKS = [
   {
     id: "facebook",
     label: "Facebook",
-    href: "https://www.facebook.com/novagateimmi",
+    href: "https://www.facebook.com/profile.php?id=61592230239967",
   },
   {
     id: "instagram",
