@@ -8,6 +8,43 @@ export const SITE = {
   addressLines: ["52 Summer Street", "Nashua, NH 03064"],
 } as const;
 
+/**
+ * Business social profiles. Update URLs when official handles are confirmed.
+ * WhatsApp uses the public business phone number.
+ */
+export const SOCIAL_LINKS = [
+  {
+    id: "facebook",
+    label: "Facebook",
+    href: "https://www.facebook.com/novagateimmi",
+  },
+  {
+    id: "instagram",
+    label: "Instagram",
+    href: "https://www.instagram.com/novagateimmi",
+  },
+  {
+    id: "whatsapp",
+    label: "WhatsApp",
+    href: "https://wa.me/16038203041",
+  },
+  {
+    id: "twitter",
+    label: "X (Twitter)",
+    href: "https://x.com/novagateimmi",
+  },
+  {
+    id: "youtube",
+    label: "YouTube",
+    href: "https://www.youtube.com/@novagateimmi",
+  },
+  {
+    id: "linkedin",
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/novagateimmi",
+  },
+] as const;
+
 /** Path segments (without locale prefix). Labels come from i18n. */
 export const NAV_LINKS = [
   { to: "", key: "home" },

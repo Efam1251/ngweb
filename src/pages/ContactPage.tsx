@@ -5,6 +5,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { Icon } from "@/components/ui/Icon";
 import { Seo } from "@/components/seo/Seo";
 import { SITE } from "@/data/site";
+import { SocialLinks } from "@/components/ui/SocialLinks";
 import { useI18n } from "@/i18n";
 
 export function ContactPage() {
@@ -109,6 +110,12 @@ export function ContactPage() {
                   </div>
                 </div>
               </dl>
+              <div className="mt-8 border-t border-white/15 pt-6">
+                <p className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-white/45">
+                  {t("footer.follow")}
+                </p>
+                <SocialLinks onDark className="mt-3" />
+              </div>
             </aside>
           </Reveal>
         </Container>

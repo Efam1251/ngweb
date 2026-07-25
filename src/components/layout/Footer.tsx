@@ -3,6 +3,7 @@ import { NAV_LINKS, SITE } from "@/data/site";
 import { Container } from "@/components/ui/Container";
 import { BrandLogo } from "@/components/brand/BrandLogo";
 import { Button } from "@/components/ui/Button";
+import { SocialLinks } from "@/components/ui/SocialLinks";
 import { useI18n } from "@/i18n";
 
 export function Footer() {
@@ -38,6 +39,12 @@ export function Footer() {
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/65">
             {t("site.tagline")} {t("site.blurb")}
           </p>
+          <div className="mt-6">
+            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-gold-soft">
+              {t("footer.follow")}
+            </p>
+            <SocialLinks onDark className="mt-3" />
+          </div>
         </div>
 
         <div>

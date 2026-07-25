@@ -144,6 +144,7 @@ export const es = {
     greenCards: "Residencia permanente",
     citizenship: "Ciudadanía",
     visa: "Consulta de visa",
+    follow: "Síguenos",
   },
   about: {
     eyebrow: "Sobre la firma",

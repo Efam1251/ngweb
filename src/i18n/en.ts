@@ -143,6 +143,7 @@ export const en = {
     greenCards: "Green Cards",
     citizenship: "Citizenship",
     visa: "Visa Consultation",
+    follow: "Follow us",
   },
   about: {
     eyebrow: "About the firm",
