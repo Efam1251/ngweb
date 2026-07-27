@@ -15,17 +15,7 @@ export const TEAM = [
   {
     id: 1,
     image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: 2,
-    image:
       "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: 3,
-    image:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=80",
   },
 ] as const;
 

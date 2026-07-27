@@ -109,7 +109,7 @@ export function AboutPage() {
               title={t("about.teamTitle")}
             />
           </Reveal>
-          <div className="mt-14 grid gap-8 md:grid-cols-3">
+          <div className="mx-auto mt-14 max-w-md">
             {TEAM.map((member, index) => (
               <Reveal key={member.id} delayMs={index * 80}>
                 <article className="group">
