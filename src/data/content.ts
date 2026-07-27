@@ -14,8 +14,7 @@ export const VALUE_IDS = [1, 2, 3, 4] as const;
 export const TEAM = [
   {
     id: 1,
-    image:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80",
+    image: "/team/ernesto-acevedo.png",
   },
 ] as const;
 
