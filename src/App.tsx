@@ -6,6 +6,7 @@ import { ServicesPage } from "@/pages/ServicesPage";
 import { ProcessPage } from "@/pages/ProcessPage";
 import { ResourcesPage } from "@/pages/ResourcesPage";
 import { ContactPage } from "@/pages/ContactPage";
+import { CaseUpdatePage } from "@/pages/CaseUpdatePage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 import { I18nProvider, LocaleRedirect, isLocale, detectLocale } from "@/i18n";
 
@@ -34,6 +35,7 @@ export default function App() {
           <Route path="process" element={<ProcessPage />} />
           <Route path="resources" element={<ResourcesPage />} />
           <Route path="contact" element={<ContactPage />} />
+          <Route path="case-update" element={<CaseUpdatePage />} />
           <Route path="404" element={<NotFoundPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

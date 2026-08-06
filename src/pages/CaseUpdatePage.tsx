@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ContactForm } from "@/components/contact/ContactForm";
+import { CaseUpdateForm } from "@/components/contact/CaseUpdateForm";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { PageHero } from "@/components/ui/PageHero";
@@ -9,7 +9,7 @@ import { SITE } from "@/data/site";
 import { SocialLinks } from "@/components/ui/SocialLinks";
 import { useI18n } from "@/i18n";
 
-export function ContactPage() {
+export function CaseUpdatePage() {
   const { t, pathFor } = useI18n();
 
   const hours = [
@@ -21,37 +21,40 @@ export function ContactPage() {
   return (
     <>
       <Seo
-        title={t("meta.contactTitle")}
-        description={t("meta.contactDescription")}
-        path="/contact"
+        title={t("meta.caseUpdateTitle")}
+        description={t("meta.caseUpdateDescription")}
+        path="/case-update"
       />
 
       <PageHero
-        eyebrow={t("contact.eyebrow")}
-        title={t("contact.title")}
-        description={t("contact.description")}
+        eyebrow={t("caseUpdate.eyebrow")}
+        title={t("caseUpdate.title")}
+        description={t("caseUpdate.description")}
       />
 
       <section className="bg-surface-soft py-16 sm:py-20">
         <Container className="grid gap-10 lg:grid-cols-12">
           <Reveal className="lg:col-span-7">
             <div className="border border-line bg-white p-6 shadow-[0_20px_50px_rgba(10,26,47,0.06)] sm:p-8">
-              <h2 className="font-display text-3xl font-semibold text-navy">
-                {t("contact.formTitle")}
+              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-accent">
+                {t("caseUpdate.existingOnly")}
+              </p>
+              <h2 className="mt-3 font-display text-3xl font-semibold text-navy">
+                {t("caseUpdate.formTitle")}
               </h2>
-              <p className="mt-2 text-sm text-muted">{t("contact.formSubtitle")}</p>
-              <p className="mt-5 rounded-sm border border-line bg-pearl/80 px-3.5 py-3 text-sm text-muted">
-                {t("contact.existingClientPrompt")}{" "}
+              <p className="mt-2 text-sm text-muted">{t("caseUpdate.formSubtitle")}</p>
+              <div className="mt-8">
+                <CaseUpdateForm />
+              </div>
+              <p className="mt-8 border-t border-line pt-6 text-sm text-muted">
+                {t("caseUpdate.newClientPrompt")}{" "}
                 <Link
-                  to={pathFor("case-update")}
+                  to={pathFor("contact")}
                   className="font-semibold text-accent underline-offset-2 hover:underline"
                 >
-                  {t("contact.existingClientLink")}
+                  {t("caseUpdate.newClientLink")}
                 </Link>
               </p>
-              <div className="mt-8">
-                <ContactForm />
-              </div>
             </div>
           </Reveal>
 
@@ -63,6 +66,9 @@ export function ContactPage() {
               <h2 className="mt-3 font-display text-3xl font-semibold">
                 {t("common.officeInfo")}
               </h2>
+              <p className="mt-4 text-sm leading-relaxed text-white/70">
+                {t("caseUpdate.sidebarNote")}
+              </p>
               <dl className="mt-8 space-y-6 text-sm">
                 <div className="flex gap-3">
                   <Icon name="message" className="mt-0.5 h-5 w-5 shrink-0 text-gold" />

@@ -103,6 +103,9 @@ export function Navbar() {
           <Button to={pathFor("contact")} variant="gold" size="sm">
             {t("nav.schedule")}
           </Button>
+          <Button to={pathFor("case-update")} variant="secondary" size="sm">
+            {t("nav.caseUpdate")}
+          </Button>
         </div>
 
         <button
@@ -156,6 +159,9 @@ export function Navbar() {
             <div className="mt-2 flex flex-col gap-2.5">
               <Button to={pathFor("contact")} variant="gold">
                 {t("nav.schedule")}
+              </Button>
+              <Button to={pathFor("case-update")} variant="secondary">
+                {t("nav.caseUpdate")}
               </Button>
             </div>
           </Container>

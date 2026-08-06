@@ -103,7 +103,10 @@ npm run dev
 
 Test the Contact page — you should receive an email.
 
-Later, when Spring Boot is online, you can switch `submitContactForm` to your API.
+The same Web3Forms key powers **Request a Case Update** at `/en/case-update` and `/es/case-update`.
+Emails arrive with subject `Case Update Request – [Case Number] – [Client Name]` and Reply-To set to the client’s address.
+
+Later, when Spring Boot is online, you can switch `submitContactForm` / `submitCaseUpdateForm` to your API.
 
 ## Deploy to Cloudflare Pages
 

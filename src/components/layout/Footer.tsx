@@ -26,6 +26,9 @@ export function Footer() {
             <Button to={pathFor("contact")} variant="gold" size="lg">
               {t("nav.schedule")}
             </Button>
+            <Button to={pathFor("case-update")} variant="outlineDark" size="lg">
+              {t("footer.caseUpdate")}
+            </Button>
             <Button to={pathFor("services")} variant="outlineDark" size="lg">
               {t("common.exploreServices")}
             </Button>
@@ -104,6 +107,16 @@ export function Footer() {
               <a href={SITE.phoneHref} className="hover:text-white">
                 {SITE.phone}
               </a>
+            </li>
+            <li>
+              <Link to={pathFor("contact")} className="hover:text-white">
+                {t("nav.schedule")}
+              </Link>
+            </li>
+            <li>
+              <Link to={pathFor("case-update")} className="hover:text-white">
+                {t("footer.caseUpdate")}
+              </Link>
             </li>
             {SITE.addressLines.map((line) => (
               <li key={line}>{line}</li>

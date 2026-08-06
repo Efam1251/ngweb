@@ -2,16 +2,21 @@ import { useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { SERVICES } from "@/data/services";
 import { SITE } from "@/data/site";
-import { submitContactForm, type FormState } from "@/lib/submitContactForm";
+import {
+  submitCaseUpdateForm,
+  type CaseUpdateFormState,
+} from "@/lib/submitCaseUpdateForm";
 import { useI18n } from "@/i18n";
 
-type FormErrors = Partial<Record<keyof FormState, string>>;
+type FormErrors = Partial<Record<keyof CaseUpdateFormState, string>>;
 
-const INITIAL: FormState = {
+const INITIAL: CaseUpdateFormState = {
   name: "",
   email: "",
   phone: "",
+  caseNumber: "",
   service: "",
+  dateOfBirth: "",
   message: "",
   company_website: "",
 };
@@ -22,9 +27,9 @@ const fieldClass =
 const honeypotClass =
   "absolute left-[-10000px] top-auto h-px w-px overflow-hidden opacity-0";
 
-export function ContactForm() {
+export function CaseUpdateForm() {
   const { t, messages, locale } = useI18n();
-  const [values, setValues] = useState<FormState>(INITIAL);
+  const [values, setValues] = useState<CaseUpdateFormState>(INITIAL);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
@@ -40,16 +45,19 @@ export function ContactForm() {
     [messages],
   );
 
-  const validate = (form: FormState): FormErrors => {
+  const validate = (form: CaseUpdateFormState): FormErrors => {
     const next: FormErrors = {};
-    if (!form.name.trim()) next.name = t("contact.errName");
-    if (!form.email.trim()) next.email = t("contact.errEmail");
+    if (!form.name.trim()) next.name = t("caseUpdate.errName");
+    if (!form.email.trim()) next.email = t("caseUpdate.errEmail");
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
-      next.email = t("contact.errEmailInvalid");
+      next.email = t("caseUpdate.errEmailInvalid");
     }
-    if (!form.service) next.service = t("contact.errService");
+    if (!form.phone.trim()) next.phone = t("caseUpdate.errPhone");
+    if (!form.caseNumber.trim()) next.caseNumber = t("caseUpdate.errCaseNumber");
+    if (!form.service) next.service = t("caseUpdate.errService");
+    if (!form.dateOfBirth.trim()) next.dateOfBirth = t("caseUpdate.errDob");
     if (!form.message.trim() || form.message.trim().length < 20) {
-      next.message = t("contact.errMessage");
+      next.message = t("caseUpdate.errMessage");
     }
     return next;
   };
@@ -72,17 +80,17 @@ export function ContactForm() {
     try {
       const serviceLabel =
         values.service === "other"
-          ? t("contact.other")
+          ? t("caseUpdate.other")
           : messages.services[values.service as keyof typeof messages.services]?.title ??
             values.service;
-      await submitContactForm(values, { serviceLabel, locale });
+      await submitCaseUpdateForm(values, { serviceLabel, locale });
       setDone(true);
       setValues(INITIAL);
     } catch (err) {
       setSubmitError(
         err instanceof Error
           ? err.message
-          : "We could not send your message. Please email us directly.",
+          : "We could not send your request. Please email us directly.",
       );
     } finally {
       setSubmitting(false);
@@ -93,10 +101,10 @@ export function ContactForm() {
     return (
       <div className="border border-accent/20 bg-mist p-6 sm:p-8">
         <h3 className="font-display text-2xl font-semibold text-navy">
-          {t("contact.successTitle")}
+          {t("caseUpdate.successTitle")}
         </h3>
         <p className="mt-3 text-muted">
-          {t("contact.successBody")}{" "}
+          {t("caseUpdate.successBody")}{" "}
           <a className="font-semibold text-accent" href={SITE.phoneHref}>
             {SITE.phone}
           </a>
@@ -108,7 +116,7 @@ export function ContactForm() {
           variant="secondary"
           onClick={() => setDone(false)}
         >
-          {t("contact.sendAnother")}
+          {t("caseUpdate.sendAnother")}
         </Button>
       </div>
     );
@@ -118,13 +126,17 @@ export function ContactForm() {
     <form onSubmit={onSubmit} noValidate>
       {!configured ? (
         <p className="mb-5 rounded-sm border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
-          {t("contact.notConfigured")}{" "}
+          {t("caseUpdate.notConfigured")}{" "}
           <a className="font-semibold underline" href={`mailto:${SITE.email}`}>
             {SITE.email}
           </a>
           .
         </p>
       ) : null}
+
+      <p className="mb-6 rounded-sm border border-line bg-pearl/80 px-3.5 py-3 text-sm leading-relaxed text-muted">
+        {t("caseUpdate.accuracyNote")}
+      </p>
 
       {/* Honeypot — leave empty */}
       <label className={honeypotClass} aria-hidden="true">
@@ -140,7 +152,7 @@ export function ContactForm() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="block text-sm font-semibold text-navy">
-          {t("contact.name")}
+          {t("caseUpdate.name")}
           <input
             name="name"
             value={values.name}
@@ -148,11 +160,13 @@ export function ContactForm() {
             autoComplete="name"
             className={fieldClass}
           />
-          {errors.name ? <span className="mt-1 block text-xs text-red-600">{errors.name}</span> : null}
+          {errors.name ? (
+            <span className="mt-1 block text-xs text-red-600">{errors.name}</span>
+          ) : null}
         </label>
 
         <label className="block text-sm font-semibold text-navy">
-          {t("contact.email")}
+          {t("caseUpdate.email")}
           <input
             name="email"
             type="email"
@@ -161,11 +175,13 @@ export function ContactForm() {
             autoComplete="email"
             className={fieldClass}
           />
-          {errors.email ? <span className="mt-1 block text-xs text-red-600">{errors.email}</span> : null}
+          {errors.email ? (
+            <span className="mt-1 block text-xs text-red-600">{errors.email}</span>
+          ) : null}
         </label>
 
         <label className="block text-sm font-semibold text-navy">
-          {t("contact.phone")}
+          {t("caseUpdate.phone")}
           <input
             name="phone"
             type="tel"
@@ -174,39 +190,72 @@ export function ContactForm() {
             autoComplete="tel"
             className={fieldClass}
           />
+          {errors.phone ? (
+            <span className="mt-1 block text-xs text-red-600">{errors.phone}</span>
+          ) : null}
         </label>
 
         <label className="block text-sm font-semibold text-navy">
-          {t("contact.service")}
+          {t("caseUpdate.caseNumber")}
+          <input
+            name="caseNumber"
+            value={values.caseNumber}
+            onChange={onChange}
+            autoComplete="off"
+            className={fieldClass}
+            placeholder={t("caseUpdate.caseNumberPlaceholder")}
+          />
+          {errors.caseNumber ? (
+            <span className="mt-1 block text-xs text-red-600">{errors.caseNumber}</span>
+          ) : null}
+        </label>
+
+        <label className="block text-sm font-semibold text-navy">
+          {t("caseUpdate.service")}
           <select
             name="service"
             value={values.service}
             onChange={onChange}
             className={fieldClass}
           >
-            <option value="">{t("contact.selectService")}</option>
+            <option value="">{t("caseUpdate.selectService")}</option>
             {serviceOptions.map((opt) => (
               <option key={opt.value} value={opt.value}>
                 {opt.label}
               </option>
             ))}
-            <option value="other">{t("contact.other")}</option>
+            <option value="other">{t("caseUpdate.other")}</option>
           </select>
           {errors.service ? (
             <span className="mt-1 block text-xs text-red-600">{errors.service}</span>
           ) : null}
         </label>
+
+        <label className="block text-sm font-semibold text-navy">
+          {t("caseUpdate.dateOfBirth")}
+          <input
+            name="dateOfBirth"
+            type="date"
+            value={values.dateOfBirth}
+            onChange={onChange}
+            autoComplete="bday"
+            className={fieldClass}
+          />
+          {errors.dateOfBirth ? (
+            <span className="mt-1 block text-xs text-red-600">{errors.dateOfBirth}</span>
+          ) : null}
+        </label>
       </div>
 
       <label className="mt-5 block text-sm font-semibold text-navy">
-        {t("contact.message")}
+        {t("caseUpdate.message")}
         <textarea
           name="message"
           rows={5}
           value={values.message}
           onChange={onChange}
           className={fieldClass}
-          placeholder={t("contact.messagePlaceholder")}
+          placeholder={t("caseUpdate.messagePlaceholder")}
         />
         {errors.message ? (
           <span className="mt-1 block text-xs text-red-600">{errors.message}</span>
@@ -220,9 +269,9 @@ export function ContactForm() {
       ) : null}
 
       <Button type="submit" className="mt-6 w-full sm:w-auto" variant="gold" disabled={submitting}>
-        {submitting ? t("contact.sending") : t("contact.submit")}
+        {submitting ? t("caseUpdate.sending") : t("caseUpdate.submit")}
       </Button>
-      <p className="mt-3 text-xs text-muted">{t("contact.privacy")}</p>
+      <p className="mt-3 text-xs text-muted">{t("caseUpdate.privacy")}</p>
     </form>
   );
 }

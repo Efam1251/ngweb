@@ -37,9 +37,12 @@ export function CtaBand({ title, description }: CtaBandProps) {
             <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
               {description ?? t("cta.description")}
             </p>
-            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
               <Button to={pathFor("contact")} variant="gold" size="lg">
                 {t("nav.schedule")}
+              </Button>
+              <Button to={pathFor("case-update")} variant="outlineDark" size="lg">
+                {t("cta.caseUpdateCta")}
               </Button>
               <Button href={`mailto:${SITE.email}`} variant="outlineDark" size="lg">
                 {t("cta.emailCta")}
