@@ -1,5 +1,6 @@
 import type { FormState } from "@/lib/contactTypes";
 import { SITE } from "@/data/site";
+import { buildConsultationEmailText } from "@/lib/emailTemplates";
 import { submitWeb3Form } from "@/lib/web3forms";
 
 export type { FormState } from "@/lib/contactTypes";
@@ -17,8 +18,7 @@ function submissionSource(locale: string): string {
 }
 
 /**
- * Sends consultation requests via Web3Forms.
- * Keep payload to clean labeled fields only (no custom html body).
+ * Sends consultation requests via Web3Forms with a structured message body.
  */
 export async function submitContactForm(
   payload: FormState,
@@ -29,19 +29,24 @@ export async function submitContactForm(
   const phone = payload.phone.trim() || "Not provided";
   const service = options.serviceLabel;
   const message = payload.message.trim();
+  const language = options.locale === "es" ? "Spanish" : "English";
+  const source = submissionSource(options.locale);
 
   await submitWeb3Form({
-    subject: `New consultation request — ${name} (${service})`,
+    subject: `Consultation Request – ${name} – ${service}`,
     from_name: `${SITE.shortName} Website`,
     replyto: email,
     email,
-    "Request Type": "Consultation Request",
-    "Client Name": name,
-    Phone: phone,
-    "Service Interest": service,
-    Message: message,
-    Language: options.locale === "es" ? "Spanish" : "English",
-    Source: submissionSource(options.locale),
+    name,
+    message: buildConsultationEmailText({
+      name,
+      email,
+      phone,
+      service,
+      message,
+      language,
+      source,
+    }),
     botcheck: "",
     company_website: payload.company_website?.trim() || "",
   });

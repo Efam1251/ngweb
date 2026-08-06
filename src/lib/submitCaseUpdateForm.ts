@@ -1,11 +1,11 @@
 import type { CaseUpdateFormState } from "@/lib/caseUpdateTypes";
 import { SITE } from "@/data/site";
+import { buildCaseUpdateEmailText } from "@/lib/emailTemplates";
 import { submitWeb3Form } from "@/lib/web3forms";
 
 export type { CaseUpdateFormState } from "@/lib/caseUpdateTypes";
 
 type SubmitOptions = {
-  serviceLabel: string;
   locale: string;
 };
 
@@ -17,7 +17,9 @@ function submissionSource(locale: string): string {
 }
 
 /**
- * Sends case-update requests via Web3Forms (same channel as consultation form).
+ * Sends case-update requests via Web3Forms.
+ * Uses a single structured `message` body so the inbox email stays readable
+ * (avoids Web3Forms dumping many raw custom fields as a messy list).
  */
 export async function submitCaseUpdateForm(
   payload: CaseUpdateFormState,
@@ -27,25 +29,29 @@ export async function submitCaseUpdateForm(
   const email = payload.email.trim();
   const phone = payload.phone.trim();
   const caseNumber = payload.caseNumber.trim();
-  const service = options.serviceLabel;
-  const dateOfBirth = payload.dateOfBirth.trim();
   const message = payload.message.trim();
+  const language = options.locale === "es" ? "Spanish" : "English";
+  const source = submissionSource(options.locale);
+
+  const subject = caseNumber
+    ? `Case Update Request – ${caseNumber} – ${name}`
+    : `Case Update Request – ${name}`;
 
   await submitWeb3Form({
-    subject: `Case Update Request – ${caseNumber} – ${name}`,
+    subject,
     from_name: `${SITE.shortName} Website`,
     replyto: email,
     email,
-    "Request Type": "Case Update Request",
-    "Client Name": name,
-    "Email Address": email,
-    Phone: phone,
-    "Case Number": caseNumber,
-    "Case / Service Type": service,
-    "Date of Birth": dateOfBirth,
-    "Request Details": message,
-    Language: options.locale === "es" ? "Spanish" : "English",
-    Source: submissionSource(options.locale),
+    name,
+    message: buildCaseUpdateEmailText({
+      name,
+      email,
+      phone,
+      caseNumber,
+      message,
+      language,
+      source,
+    }),
     botcheck: "",
     company_website: payload.company_website?.trim() || "",
   });

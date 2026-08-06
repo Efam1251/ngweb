@@ -1,6 +1,5 @@
-import { useMemo, useState, type ChangeEvent, type FormEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
-import { SERVICES } from "@/data/services";
 import { SITE } from "@/data/site";
 import {
   submitCaseUpdateForm,
@@ -15,8 +14,6 @@ const INITIAL: CaseUpdateFormState = {
   email: "",
   phone: "",
   caseNumber: "",
-  service: "",
-  dateOfBirth: "",
   message: "",
   company_website: "",
 };
@@ -28,22 +25,13 @@ const honeypotClass =
   "absolute left-[-10000px] top-auto h-px w-px overflow-hidden opacity-0";
 
 export function CaseUpdateForm() {
-  const { t, messages, locale } = useI18n();
+  const { t, locale } = useI18n();
   const [values, setValues] = useState<CaseUpdateFormState>(INITIAL);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const configured = Boolean(import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim());
-
-  const serviceOptions = useMemo(
-    () =>
-      SERVICES.map((s) => ({
-        value: s.id,
-        label: messages.services[s.id].title,
-      })),
-    [messages],
-  );
 
   const validate = (form: CaseUpdateFormState): FormErrors => {
     const next: FormErrors = {};
@@ -52,10 +40,6 @@ export function CaseUpdateForm() {
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
       next.email = t("caseUpdate.errEmailInvalid");
     }
-    if (!form.phone.trim()) next.phone = t("caseUpdate.errPhone");
-    if (!form.caseNumber.trim()) next.caseNumber = t("caseUpdate.errCaseNumber");
-    if (!form.service) next.service = t("caseUpdate.errService");
-    if (!form.dateOfBirth.trim()) next.dateOfBirth = t("caseUpdate.errDob");
     if (!form.message.trim() || form.message.trim().length < 20) {
       next.message = t("caseUpdate.errMessage");
     }
@@ -78,12 +62,7 @@ export function CaseUpdateForm() {
 
     setSubmitting(true);
     try {
-      const serviceLabel =
-        values.service === "other"
-          ? t("caseUpdate.other")
-          : messages.services[values.service as keyof typeof messages.services]?.title ??
-            values.service;
-      await submitCaseUpdateForm(values, { serviceLabel, locale });
+      await submitCaseUpdateForm(values, { locale });
       setDone(true);
       setValues(INITIAL);
     } catch (err) {
@@ -138,7 +117,6 @@ export function CaseUpdateForm() {
         {t("caseUpdate.accuracyNote")}
       </p>
 
-      {/* Honeypot — leave empty */}
       <label className={honeypotClass} aria-hidden="true">
         Company website
         <input
@@ -182,6 +160,7 @@ export function CaseUpdateForm() {
 
         <label className="block text-sm font-semibold text-navy">
           {t("caseUpdate.phone")}
+          <span className="ml-1 font-normal text-muted">({t("caseUpdate.optional")})</span>
           <input
             name="phone"
             type="tel"
@@ -190,13 +169,11 @@ export function CaseUpdateForm() {
             autoComplete="tel"
             className={fieldClass}
           />
-          {errors.phone ? (
-            <span className="mt-1 block text-xs text-red-600">{errors.phone}</span>
-          ) : null}
         </label>
 
         <label className="block text-sm font-semibold text-navy">
           {t("caseUpdate.caseNumber")}
+          <span className="ml-1 font-normal text-muted">({t("caseUpdate.optional")})</span>
           <input
             name="caseNumber"
             value={values.caseNumber}
@@ -205,45 +182,6 @@ export function CaseUpdateForm() {
             className={fieldClass}
             placeholder={t("caseUpdate.caseNumberPlaceholder")}
           />
-          {errors.caseNumber ? (
-            <span className="mt-1 block text-xs text-red-600">{errors.caseNumber}</span>
-          ) : null}
-        </label>
-
-        <label className="block text-sm font-semibold text-navy">
-          {t("caseUpdate.service")}
-          <select
-            name="service"
-            value={values.service}
-            onChange={onChange}
-            className={fieldClass}
-          >
-            <option value="">{t("caseUpdate.selectService")}</option>
-            {serviceOptions.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-            <option value="other">{t("caseUpdate.other")}</option>
-          </select>
-          {errors.service ? (
-            <span className="mt-1 block text-xs text-red-600">{errors.service}</span>
-          ) : null}
-        </label>
-
-        <label className="block text-sm font-semibold text-navy">
-          {t("caseUpdate.dateOfBirth")}
-          <input
-            name="dateOfBirth"
-            type="date"
-            value={values.dateOfBirth}
-            onChange={onChange}
-            autoComplete="bday"
-            className={fieldClass}
-          />
-          {errors.dateOfBirth ? (
-            <span className="mt-1 block text-xs text-red-600">{errors.dateOfBirth}</span>
-          ) : null}
         </label>
       </div>
 
