@@ -5,6 +5,7 @@ import { ServicesShowcase } from "@/components/home/ServicesShowcase";
 import { WhyChoose } from "@/components/home/WhyChoose";
 import { ProcessPreview } from "@/components/home/ProcessPreview";
 import { Testimonials } from "@/components/home/Testimonials";
+import { NewsPreview } from "@/components/news/NewsPreview";
 import { CtaBand } from "@/components/home/CtaBand";
 import { Seo } from "@/components/seo/Seo";
 import { useI18n } from "@/i18n";
@@ -21,6 +22,7 @@ export function HomePage() {
       <WhyChoose />
       <ProcessPreview />
       <Testimonials />
+      <NewsPreview />
       <CtaBand />
     </>
   );

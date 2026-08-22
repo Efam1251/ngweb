@@ -52,5 +52,6 @@ export const NAV_LINKS = [
   { to: "services", key: "services" },
   { to: "process", key: "process" },
   { to: "resources", key: "resources" },
+  { to: "news", key: "news" },
   { to: "contact", key: "contact" },
 ] as const;

@@ -5,6 +5,8 @@ import { AboutPage } from "@/pages/AboutPage";
 import { ServicesPage } from "@/pages/ServicesPage";
 import { ProcessPage } from "@/pages/ProcessPage";
 import { ResourcesPage } from "@/pages/ResourcesPage";
+import { NewsPage } from "@/pages/NewsPage";
+import { NewsPostPage } from "@/pages/NewsPostPage";
 import { ContactPage } from "@/pages/ContactPage";
 import { CaseUpdatePage } from "@/pages/CaseUpdatePage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
@@ -34,6 +36,8 @@ export default function App() {
           <Route path="services" element={<ServicesPage />} />
           <Route path="process" element={<ProcessPage />} />
           <Route path="resources" element={<ResourcesPage />} />
+          <Route path="news" element={<NewsPage />} />
+          <Route path="news/:slug" element={<NewsPostPage />} />
           <Route path="contact" element={<ContactPage />} />
           <Route path="case-update" element={<CaseUpdatePage />} />
           <Route path="404" element={<NotFoundPage />} />
