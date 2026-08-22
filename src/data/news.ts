@@ -21,7 +21,7 @@ export type NewsPost = {
 export const NEWS_POSTS: NewsPost[] = [
   {
     slug: "visa-bulletin-september-2026",
-    date: "2026-08-12",
+    date: "2026-08-22",
     copyKey: "visaBulletinSeptember2026",
     kind: "visa-bulletin",
     bulletin: {
@@ -36,7 +36,6 @@ export function listNewsNewestFirst(): NewsPost[] {
   return [...NEWS_POSTS].sort((a, b) => b.date.localeCompare(a.date));
 }
 
-export function getNewsBySlug(slug: string | undefined): NewsPost | undefined {
-  if (!slug) return undefined;
-  return NEWS_POSTS.find((post) => post.slug === slug);
+export function getLatestBulletin(): NewsPost | undefined {
+  return listNewsNewestFirst().find((post) => post.kind === "visa-bulletin");
 }

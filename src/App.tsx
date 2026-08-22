@@ -5,12 +5,16 @@ import { AboutPage } from "@/pages/AboutPage";
 import { ServicesPage } from "@/pages/ServicesPage";
 import { ProcessPage } from "@/pages/ProcessPage";
 import { ResourcesPage } from "@/pages/ResourcesPage";
-import { NewsPage } from "@/pages/NewsPage";
-import { NewsPostPage } from "@/pages/NewsPostPage";
+import { VisaBulletinPage } from "@/pages/VisaBulletinPage";
 import { ContactPage } from "@/pages/ContactPage";
 import { CaseUpdatePage } from "@/pages/CaseUpdatePage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
-import { I18nProvider, LocaleRedirect, isLocale, detectLocale } from "@/i18n";
+import { I18nProvider, LocaleRedirect, isLocale, detectLocale, useI18n } from "@/i18n";
+
+function RedirectToVisaBulletin() {
+  const { pathFor } = useI18n();
+  return <Navigate to={pathFor("visa-bulletin")} replace />;
+}
 
 function LocaleGate() {
   const { lang } = useParams();
@@ -36,8 +40,9 @@ export default function App() {
           <Route path="services" element={<ServicesPage />} />
           <Route path="process" element={<ProcessPage />} />
           <Route path="resources" element={<ResourcesPage />} />
-          <Route path="news" element={<NewsPage />} />
-          <Route path="news/:slug" element={<NewsPostPage />} />
+          <Route path="visa-bulletin" element={<VisaBulletinPage />} />
+          <Route path="news" element={<RedirectToVisaBulletin />} />
+          <Route path="news/:slug" element={<RedirectToVisaBulletin />} />
           <Route path="contact" element={<ContactPage />} />
           <Route path="case-update" element={<CaseUpdatePage />} />
           <Route path="404" element={<NotFoundPage />} />

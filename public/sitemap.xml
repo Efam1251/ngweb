@@ -10,10 +10,8 @@
   <url><loc>https://novagateimmi.com/es/process</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://novagateimmi.com/en/resources</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://novagateimmi.com/es/resources</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://novagateimmi.com/en/news</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://novagateimmi.com/es/news</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://novagateimmi.com/en/news/visa-bulletin-september-2026</loc><changefreq>monthly</changefreq><priority>0.75</priority></url>
-  <url><loc>https://novagateimmi.com/es/news/visa-bulletin-september-2026</loc><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://novagateimmi.com/en/visa-bulletin</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://novagateimmi.com/es/visa-bulletin</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
   <url><loc>https://novagateimmi.com/en/contact</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://novagateimmi.com/es/contact</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://novagateimmi.com/en/case-update</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>

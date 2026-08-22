@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { BrandLogo } from "@/components/brand/BrandLogo";
+import { getLatestBulletin } from "@/data/news";
 import { useI18n } from "@/i18n";
 
 const HERO_IMAGE =
@@ -8,6 +10,7 @@ const HERO_IMAGE =
 
 export function Hero() {
   const { t, pathFor } = useI18n();
+  const latestBulletin = getLatestBulletin();
 
   return (
     <section className="relative min-h-[100dvh] overflow-hidden bg-navy-deep">
@@ -42,6 +45,21 @@ export function Hero() {
               {t("common.exploreServices")}
             </Button>
           </div>
+          {latestBulletin ? (
+            <Link
+              to={pathFor("visa-bulletin")}
+              className="mt-8 inline-flex max-w-xl items-start gap-3 border-l-2 border-gold pl-4 text-left text-white/80 transition hover:text-white"
+            >
+              <span>
+                <span className="block text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-gold-soft">
+                  {t("news.heroLatest")}
+                </span>
+                <span className="mt-1 block text-sm font-semibold leading-snug sm:text-base">
+                  {t(`newsPosts.${latestBulletin.copyKey}.title`)}
+                </span>
+              </span>
+            </Link>
+          ) : null}
         </div>
       </Container>
 

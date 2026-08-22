@@ -145,4 +145,4 @@ Later, when Spring Boot is online, you can switch `submitContactForm` / `submitC
 - Services: `src/data/services.ts`
 - Articles / FAQs / team: `src/data/content.ts`
 - Company contact block: `src/data/site.ts`
-- Immigration news: add an entry in `src/data/news.ts`, English/Spanish copy in `src/i18n/en.ts` and `src/i18n/es.ts` (`newsPosts`), then push to GitHub so Cloudflare Pages rebuilds. Visa Bulletin charts live in `src/data/visaBulletinFamily.ts`.
+- Visa Bulletin page: `/en/visa-bulletin` and `/es/visa-bulletin`. Update the latest month in `src/data/visaBulletinFamily.ts` and `src/data/news.ts`, plus English/Spanish copy in `newsPosts`, then push so Cloudflare Pages rebuilds.

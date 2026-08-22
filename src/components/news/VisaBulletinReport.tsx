@@ -27,22 +27,27 @@ type Props = {
 function formatDuration(
   diff: CalendarDiff,
   t: (key: string, vars?: Record<string, string | number>) => string,
+  compact = false,
 ) {
+  const unitKey = compact ? "unitShort" : "unit";
   return durationParts(diff)
     .map((part) => {
       const plural = part.n === 1 ? "" : "s";
-      return t(`news.unit.${part.unit}${plural}`, { n: part.n });
+      return t(`news.${unitKey}.${part.unit}${plural}`, { n: part.n });
     })
-    .join(t("news.durationJoin"));
+    .join(t(compact ? "news.durationJoinShort" : "news.durationJoin"));
 }
 
 function formatCell(
   cell: BulletinCell,
   locale: string,
   t: (key: string) => string,
+  compact = false,
 ) {
-  if (cell.type === "current") return t("news.current");
-  if (cell.type === "unavailable") return t("news.unavailable");
+  if (cell.type === "current") return t(compact ? "news.currentShort" : "news.current");
+  if (cell.type === "unavailable") {
+    return t(compact ? "news.unavailableShort" : "news.unavailable");
+  }
   return formatIsoDate(cell.iso, locale);
 }
 
@@ -56,12 +61,17 @@ function movementClass(kind: MovementKind) {
 function movementLabel(
   move: CellMovement,
   t: (key: string, vars?: Record<string, string | number>) => string,
+  compact = false,
 ) {
   if (move.kind === "advance" && move.diff) {
-    return t("news.advanced", { duration: formatDuration(move.diff, t) });
+    return t(compact ? "news.advancedShort" : "news.advanced", {
+      duration: formatDuration(move.diff, t, compact),
+    });
   }
   if (move.kind === "retrogress" && move.diff) {
-    return t("news.retrogressed", { duration: formatDuration(move.diff, t) });
+    return t(compact ? "news.retrogressedShort" : "news.retrogressed", {
+      duration: formatDuration(move.diff, t, compact),
+    });
   }
   if (move.kind === "became-current") return t("news.becameCurrent");
   if (move.kind === "lost-current") return t("news.lostCurrent");
@@ -91,18 +101,29 @@ function ComparisonTable({
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[44rem] border-collapse text-left text-sm">
-        <caption className="mb-3 text-left text-xs font-semibold uppercase tracking-[0.16em] text-accent">
+      <table className="w-max min-w-full table-fixed border-collapse text-left text-[0.78rem] leading-snug">
+        <colgroup>
+          <col className="w-[9.5rem]" />
+          {CHARGEABILITIES.map((region) => (
+            <col key={region} className="w-[7.75rem]" />
+          ))}
+        </colgroup>
+        <caption className="mb-2 text-left text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-accent">
           {t(`news.chart.${chart}`)} · {currentLabel} {t("news.vs")} {previousLabel}
         </caption>
         <thead>
-          <tr className="border-b border-line bg-fog/70 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-muted">
-            <th scope="col" className="px-3 py-3">
+          <tr className="border-b border-line bg-fog/70 text-[0.62rem] font-semibold uppercase tracking-[0.08em] text-muted">
+            <th scope="col" className="px-2 py-2 align-bottom">
               {t("news.category")}
             </th>
             {CHARGEABILITIES.map((region) => (
-              <th key={region} scope="col" className="px-3 py-3">
-                {t(`news.region.${region}`)}
+              <th
+                key={region}
+                scope="col"
+                title={t(`news.region.${region}`)}
+                className="px-2 py-2 align-bottom"
+              >
+                {t(`news.regionShort.${region}`)}
               </th>
             ))}
           </tr>
@@ -112,10 +133,11 @@ function ComparisonTable({
             <tr key={category} className="border-b border-line align-top">
               <th
                 scope="row"
-                className="whitespace-nowrap px-3 py-4 font-semibold text-navy"
+                title={t(`news.cat.${category}`)}
+                className="px-2 py-2 font-semibold text-navy"
               >
-                <span>{category}</span>
-                <span className="mt-1 block max-w-[11rem] text-[0.7rem] font-normal leading-snug text-muted">
+                <span className="block">{category}</span>
+                <span className="mt-0.5 block text-[0.62rem] font-normal leading-tight text-muted break-words">
                   {t(`news.cat.${category}`)}
                 </span>
               </th>
@@ -125,16 +147,21 @@ function ComparisonTable({
                   ?.find((row) => row.region === region);
                 if (!move) return <td key={region} />;
                 return (
-                  <td key={region} className="px-3 py-4">
-                    <p className="font-semibold text-navy">
-                      {formatCell(move.current, locale, t)}
+                  <td key={region} className="px-2 py-2 align-top">
+                    <p
+                      className="font-semibold text-navy break-words"
+                      title={formatCell(move.current, locale, t)}
+                    >
+                      {formatCell(move.current, locale, t, true)}
                     </p>
-                    <p className={`mt-1 text-xs font-semibold ${movementClass(move.kind)}`}>
-                      {movementLabel(move, t)}
+                    <p
+                      className={`mt-0.5 text-[0.68rem] font-semibold break-words ${movementClass(move.kind)}`}
+                    >
+                      {movementLabel(move, t, true)}
                     </p>
                     {move.kind === "advance" || move.kind === "retrogress" ? (
-                      <p className="mt-1 text-[0.7rem] text-slate">
-                        {t("news.was")} {formatCell(move.previous, locale, t)}
+                      <p className="mt-0.5 text-[0.62rem] leading-tight text-slate break-words">
+                        {t("news.was")} {formatCell(move.previous, locale, t, true)}
                       </p>
                     ) : null}
                   </td>
@@ -148,50 +175,111 @@ function ComparisonTable({
   );
 }
 
-function InsightTable({
-  caption,
-  rows,
-}: {
-  caption: string;
-  rows: Array<{
-    category: FamilyCategory;
-    region: Chargeability;
-    value: string;
-    detail?: string;
-  }>;
-}) {
-  const { t } = useI18n();
+function CompactMoves({ rows }: { rows: CellMovement[] }) {
+  const { t, locale } = useI18n();
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full min-w-[32rem] border-collapse text-left text-sm">
-        <caption className="mb-3 text-left text-xs font-semibold uppercase tracking-[0.16em] text-accent">
-          {caption}
-        </caption>
+    <div className="overflow-x-auto border border-line bg-white">
+      <table className="w-full min-w-[36rem] table-fixed border-collapse text-left text-[0.78rem] leading-snug">
+        <colgroup>
+          <col className="w-[5.5rem]" />
+          <col className="w-[3.25rem]" />
+          <col className="w-[6.5rem]" />
+          <col className="w-[7.5rem]" />
+          <col />
+        </colgroup>
         <thead>
-          <tr className="border-b border-line bg-fog/70 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-muted">
-            <th className="px-3 py-3">{t("news.category")}</th>
-            <th className="px-3 py-3">{t("news.chargeability")}</th>
-            <th className="px-3 py-3">{t("news.figure")}</th>
+          <tr className="border-b border-line bg-fog/70 text-[0.62rem] font-semibold uppercase tracking-[0.08em] text-muted">
+            <th className="px-2 py-1.5">{t("news.chartColumn")}</th>
+            <th className="px-2 py-1.5">{t("news.category")}</th>
+            <th className="px-2 py-1.5">{t("news.chargeability")}</th>
+            <th className="px-2 py-1.5">{t("news.movement")}</th>
+            <th className="px-2 py-1.5">{t("news.dates")}</th>
           </tr>
         </thead>
         <tbody>
-          {rows.map((row) => (
+          {rows.map((move) => (
             <tr
-              key={`${row.category}-${row.region}`}
-              className="border-b border-line"
+              key={`${move.chart}-${move.category}-${move.region}`}
+              className="border-b border-line last:border-0"
             >
-              <td className="px-3 py-3 font-semibold text-navy">
-                {row.category}
+              <td className="px-2 py-1.5 text-muted">
+                {t(`news.chartShort.${move.chart}`)}
               </td>
-              <td className="px-3 py-3 text-muted">
-                {t(`news.region.${row.region}`)}
+              <td className="px-2 py-1.5 font-semibold text-navy">{move.category}</td>
+              <td
+                className="px-2 py-1.5 text-muted break-words"
+                title={t(`news.region.${move.region}`)}
+              >
+                {t(`news.regionShort.${move.region}`)}
               </td>
-              <td className="px-3 py-3">
-                <span className="font-semibold text-navy">{row.value}</span>
-                {row.detail ? (
-                  <span className="mt-0.5 block text-xs text-slate">{row.detail}</span>
-                ) : null}
+              <td className={`px-2 py-1.5 font-semibold break-words ${movementClass(move.kind)}`}>
+                {movementLabel(move, t, true)}
               </td>
+              <td className="px-2 py-1.5 text-muted break-words">
+                {formatCell(move.previous, locale, t, true)} →{" "}
+                {formatCell(move.current, locale, t, true)}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function CompactMatrix({
+  caption,
+  cells,
+}: {
+  caption: string;
+  cells: Record<FamilyCategory, Record<Chargeability, { value: string; detail?: string }>>;
+}) {
+  const { t } = useI18n();
+  return (
+    <div className="overflow-x-auto border border-line bg-white">
+      <table className="w-max min-w-full table-fixed border-collapse text-left text-[0.78rem] leading-snug">
+        <colgroup>
+          <col className="w-[3.25rem]" />
+          {CHARGEABILITIES.map((region) => (
+            <col key={region} className="w-[7.25rem]" />
+          ))}
+        </colgroup>
+        <caption className="mb-2 px-2 pt-2 text-left text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-accent">
+          {caption}
+        </caption>
+        <thead>
+          <tr className="border-b border-line bg-fog/70 text-[0.62rem] font-semibold uppercase tracking-[0.08em] text-muted">
+            <th className="px-2 py-1.5">{t("news.category")}</th>
+            {CHARGEABILITIES.map((region) => (
+              <th
+                key={region}
+                title={t(`news.region.${region}`)}
+                className="px-2 py-1.5"
+              >
+                {t(`news.regionShort.${region}`)}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {FAMILY_CATEGORIES.map((category) => (
+            <tr key={category} className="border-b border-line last:border-0">
+              <th scope="row" className="px-2 py-1.5 font-semibold text-navy">
+                {category}
+              </th>
+              {CHARGEABILITIES.map((region) => {
+                const cell = cells[category][region];
+                return (
+                  <td key={region} className="px-2 py-1.5 align-top">
+                    <p className="font-semibold text-navy break-words">{cell.value}</p>
+                    {cell.detail ? (
+                      <p className="mt-0.5 text-[0.62rem] leading-tight text-slate break-words">
+                        {cell.detail}
+                      </p>
+                    ) : null}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>
@@ -214,74 +302,88 @@ export function VisaBulletinReport({ post }: Props) {
   const currentLabel = t(`news.monthName.${current.labelKey}`);
   const previousLabel = t(`news.monthName.${previous.labelKey}`);
 
-  const backlogRows = FAMILY_CATEGORIES.flatMap((category) =>
-    CHARGEABILITIES.map((region) => {
-      const cell = parseVisaBulletinToken(current.finalAction[category][region]);
-      const behind = backlogVsMonth(cell, current.monthStart);
-      if (!behind || cell.type !== "date") return null;
-      const faIsAhead = cell.iso >= current.monthStart;
-      return {
-        category,
-        region,
-        value: faIsAhead
-          ? t("news.nearCurrent", { duration: formatDuration(behind, t) })
-          : formatDuration(behind, t),
-        detail: `${t("news.finalActionDate")}: ${formatIsoDate(cell.iso, locale)}`,
-      };
-    }),
-  ).filter((row) => row !== null);
+  const backlogCells = Object.fromEntries(
+    FAMILY_CATEGORIES.map((category) => [
+      category,
+      Object.fromEntries(
+        CHARGEABILITIES.map((region) => {
+          const cell = parseVisaBulletinToken(current.finalAction[category][region]);
+          const behind = backlogVsMonth(cell, current.monthStart);
+          if (!behind || cell.type !== "date") {
+            return [region, { value: formatCell(cell, locale, t, true) }];
+          }
+          const faIsAhead = cell.iso >= current.monthStart;
+          return [
+            region,
+            {
+              value: faIsAhead
+                ? t("news.nearCurrent", { duration: formatDuration(behind, t, true) })
+                : formatDuration(behind, t, true),
+              detail: formatIsoDate(cell.iso, locale),
+            },
+          ];
+        }),
+      ),
+    ]),
+  ) as Record<FamilyCategory, Record<Chargeability, { value: string; detail?: string }>>;
 
-  const leadRows = FAMILY_CATEGORIES.flatMap((category) =>
-    CHARGEABILITIES.map((region) => {
-      const fa = parseVisaBulletinToken(current.finalAction[category][region]);
-      const filing = parseVisaBulletinToken(
-        current.datesForFiling[category][region],
-      );
-      if (filing.type === "current") {
-        return {
-          category,
-          region,
-          value: t("news.filingCurrent"),
-          detail: `${t("news.finalActionDate")}: ${formatCell(fa, locale, t)}`,
-        };
-      }
-      const lead = filingLead(fa, filing);
-      if (!lead) return null;
-      return {
-        category,
-        region,
-        value: formatDuration(lead, t),
-        detail: `${formatCell(fa, locale, t)} → ${formatCell(filing, locale, t)}`,
-      };
-    }),
-  ).filter((row) => row !== null);
+  const leadCells = Object.fromEntries(
+    FAMILY_CATEGORIES.map((category) => [
+      category,
+      Object.fromEntries(
+        CHARGEABILITIES.map((region) => {
+          const fa = parseVisaBulletinToken(current.finalAction[category][region]);
+          const filing = parseVisaBulletinToken(
+            current.datesForFiling[category][region],
+          );
+          if (filing.type === "current") {
+            return [
+              region,
+              {
+                value: t("news.currentShort"),
+                detail: `${formatCell(fa, locale, t, true)} → ${t("news.currentShort")}`,
+              },
+            ];
+          }
+          const lead = filingLead(fa, filing);
+          return [
+            region,
+            {
+              value: lead ? formatDuration(lead, t, true) : "—",
+              detail: `${formatCell(fa, locale, t, true)} → ${formatCell(filing, locale, t, true)}`,
+            },
+          ];
+        }),
+      ),
+    ]),
+  ) as Record<FamilyCategory, Record<Chargeability, { value: string; detail?: string }>>;
 
   return (
-    <div className="space-y-14">
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div className="border border-line bg-white p-5">
+    <div className="space-y-10">
+      <div className="grid gap-3 sm:grid-cols-3">
+        <div className="border border-line bg-white px-4 py-3.5">
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-accent">
             {t("news.statFinalAction")}
           </p>
-          <p className="mt-2 font-display text-3xl font-semibold text-navy">
+          <p className="mt-1 font-display text-2xl font-semibold text-navy">
             {faCounts.advanced}/{faCounts.total}
           </p>
           <p className="mt-1 text-sm text-muted">{t("news.statAdvanced")}</p>
         </div>
-        <div className="border border-line bg-white p-5">
+        <div className="border border-line bg-white px-4 py-3.5">
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-accent">
             {t("news.statFiling")}
           </p>
-          <p className="mt-2 font-display text-3xl font-semibold text-navy">
+          <p className="mt-1 font-display text-2xl font-semibold text-navy">
             {filingCounts.advanced}/{filingCounts.total}
           </p>
           <p className="mt-1 text-sm text-muted">{t("news.statAdvanced")}</p>
         </div>
-        <div className="border border-line bg-white p-5">
+        <div className="border border-line bg-white px-4 py-3.5">
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-accent">
             {t("news.statHeld")}
           </p>
-          <p className="mt-2 font-display text-3xl font-semibold text-navy">
+          <p className="mt-1 font-display text-2xl font-semibold text-navy">
             {faCounts.held}
           </p>
           <p className="mt-1 text-sm text-muted">{t("news.statHeldFa")}</p>
@@ -289,37 +391,21 @@ export function VisaBulletinReport({ post }: Props) {
       </div>
 
       <section>
-        <h2 className="font-display text-2xl font-semibold text-navy sm:text-3xl">
+        <h2 className="font-display text-xl font-semibold text-navy sm:text-2xl">
           {t("news.whatChanged")}
         </h2>
-        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted sm:text-base">
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted">
           {t("news.whatChangedBody", {
             current: currentLabel,
             previous: previousLabel,
           })}
         </p>
-        <ul className="mt-6 space-y-3">
-          {advances.map((move) => (
-            <li
-              key={`${move.chart}-${move.category}-${move.region}`}
-              className="border border-line bg-white px-5 py-4"
-            >
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
-                {t(`news.chart.${move.chart}`)}
-              </p>
-              <p className="mt-1 font-semibold text-navy">
-                {move.category} · {t(`news.region.${move.region}`)}
-              </p>
-              <p className="mt-1 text-sm text-muted">
-                {formatCell(move.previous, locale, t)} →{" "}
-                {formatCell(move.current, locale, t)} · {movementLabel(move, t)}
-              </p>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-3">
+          <CompactMoves rows={advances} />
+        </div>
       </section>
 
-      <section className="border border-line bg-white p-4 sm:p-6">
+      <section className="border border-line bg-white p-3 sm:p-4">
         <ComparisonTable
           chart="finalAction"
           previousLabel={previousLabel}
@@ -328,7 +414,7 @@ export function VisaBulletinReport({ post }: Props) {
         />
       </section>
 
-      <section className="border border-line bg-white p-4 sm:p-6">
+      <section className="border border-line bg-white p-3 sm:p-4">
         <ComparisonTable
           chart="datesForFiling"
           previousLabel={previousLabel}
@@ -349,29 +435,29 @@ export function VisaBulletinReport({ post }: Props) {
       </section>
 
       <section>
-        <h2 className="font-display text-2xl font-semibold text-navy sm:text-3xl">
+        <h2 className="font-display text-xl font-semibold text-navy sm:text-2xl">
           {t("news.backlogTitle")}
         </h2>
-        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted sm:text-base">
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted">
           {t("news.backlogBody", { month: currentLabel })}
         </p>
-        <div className="mt-6 border border-line bg-white p-4 sm:p-6">
-          <InsightTable
+        <div className="mt-3">
+          <CompactMatrix
             caption={t("news.backlogCaption")}
-            rows={backlogRows}
+            cells={backlogCells}
           />
         </div>
       </section>
 
       <section>
-        <h2 className="font-display text-2xl font-semibold text-navy sm:text-3xl">
+        <h2 className="font-display text-xl font-semibold text-navy sm:text-2xl">
           {t("news.gapTitle")}
         </h2>
-        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted sm:text-base">
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted">
           {t("news.gapBody")}
         </p>
-        <div className="mt-6 border border-line bg-white p-4 sm:p-6">
-          <InsightTable caption={t("news.gapCaption")} rows={leadRows} />
+        <div className="mt-3">
+          <CompactMatrix caption={t("news.gapCaption")} cells={leadCells} />
         </div>
       </section>
 

@@ -17,12 +17,12 @@ export function HomePage() {
       <Seo description={t("meta.homeDescription")} path="" />
       <Hero />
       <MetricsBar />
+      <NewsPreview />
       <ExpertiseSection />
       <ServicesShowcase />
       <WhyChoose />
       <ProcessPreview />
       <Testimonials />
-      <NewsPreview />
       <CtaBand />
     </>
   );
