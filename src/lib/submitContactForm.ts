@@ -1,5 +1,6 @@
 import type { FormState } from "@/lib/contactTypes";
 import { SITE } from "@/data/site";
+import { LEGAL_VERSION } from "@/data/legal";
 import { buildConsultationEmailText } from "@/lib/emailTemplates";
 import { submitWeb3Form } from "@/lib/web3forms";
 
@@ -8,6 +9,7 @@ export type { FormState } from "@/lib/contactTypes";
 type SubmitOptions = {
   serviceLabel: string;
   locale: string;
+  acceptedLegal: boolean;
 };
 
 function submissionSource(locale: string): string {
@@ -46,6 +48,9 @@ export async function submitContactForm(
       message,
       language,
       source,
+      legalConsent: options.acceptedLegal
+        ? `Privacy Policy and Terms of Service v${LEGAL_VERSION} accepted at ${new Date().toISOString()}`
+        : "Not recorded",
     }),
     botcheck: "",
     company_website: payload.company_website?.trim() || "",

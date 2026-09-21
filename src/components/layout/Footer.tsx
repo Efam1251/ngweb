@@ -126,11 +126,19 @@ export function Footer() {
       </Container>
 
       <div className="relative border-t border-white/10">
-        <Container className="flex flex-col gap-2 py-5 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between">
+        <Container className="flex flex-col gap-3 py-5 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} {SITE.name}. {t("common.rightsReserved")}
           </p>
-          <p>{t("common.notLawFirm")}</p>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <Link to={pathFor("privacy")} className="transition hover:text-white">
+              {t("legal.privacyPolicy")}
+            </Link>
+            <Link to={pathFor("terms")} className="transition hover:text-white">
+              {t("legal.termsOfService")}
+            </Link>
+            <p className="text-white/40">{t("common.notLawFirm")}</p>
+          </div>
         </Container>
       </div>
     </footer>

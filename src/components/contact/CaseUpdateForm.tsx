@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
+import { LegalConsentField } from "@/components/contact/LegalConsentField";
 import { SITE } from "@/data/site";
 import {
   submitCaseUpdateForm,
@@ -7,7 +8,7 @@ import {
 } from "@/lib/submitCaseUpdateForm";
 import { useI18n } from "@/i18n";
 
-type FormErrors = Partial<Record<keyof CaseUpdateFormState, string>>;
+type FormErrors = Partial<Record<keyof CaseUpdateFormState | "legalConsent", string>>;
 
 const INITIAL: CaseUpdateFormState = {
   name: "",
@@ -27,6 +28,7 @@ const honeypotClass =
 export function CaseUpdateForm() {
   const { t, locale } = useI18n();
   const [values, setValues] = useState<CaseUpdateFormState>(INITIAL);
+  const [acceptedLegal, setAcceptedLegal] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
@@ -43,6 +45,7 @@ export function CaseUpdateForm() {
     if (!form.message.trim() || form.message.trim().length < 20) {
       next.message = t("caseUpdate.errMessage");
     }
+    if (!acceptedLegal) next.legalConsent = t("legal.errConsent");
     return next;
   };
 
@@ -62,9 +65,10 @@ export function CaseUpdateForm() {
 
     setSubmitting(true);
     try {
-      await submitCaseUpdateForm(values, { locale });
+      await submitCaseUpdateForm(values, { locale, acceptedLegal: true });
       setDone(true);
       setValues(INITIAL);
+      setAcceptedLegal(false);
     } catch (err) {
       setSubmitError(
         err instanceof Error
@@ -200,6 +204,12 @@ export function CaseUpdateForm() {
         ) : null}
       </label>
 
+      <LegalConsentField
+        checked={acceptedLegal}
+        onChange={setAcceptedLegal}
+        error={errors.legalConsent}
+      />
+
       {submitError ? (
         <p className="mt-4 rounded-sm border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
           {submitError}
@@ -209,7 +219,6 @@ export function CaseUpdateForm() {
       <Button type="submit" className="mt-6 w-full sm:w-auto" variant="gold" disabled={submitting}>
         {submitting ? t("caseUpdate.sending") : t("caseUpdate.submit")}
       </Button>
-      <p className="mt-3 text-xs text-muted">{t("caseUpdate.privacy")}</p>
     </form>
   );
 }

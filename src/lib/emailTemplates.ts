@@ -12,6 +12,7 @@ export function buildCaseUpdateEmailText(data: {
   message: string;
   language: string;
   source: string;
+  legalConsent: string;
 }): string {
   const caseLabel = data.caseNumber.trim() || "Not provided";
   const phone = data.phone.trim() || "Not provided";
@@ -40,6 +41,10 @@ export function buildCaseUpdateEmailText(data: {
     "1. Look up this client in SystemImmi (email, phone, or case number).",
     "2. Reply to this email to respond directly to the client.",
     "",
+    "CONSENT",
+    "-------",
+    data.legalConsent,
+    "",
     `Source: ${data.source}`,
   ].join("\n");
 }
@@ -52,6 +57,7 @@ export function buildConsultationEmailText(data: {
   message: string;
   language: string;
   source: string;
+  legalConsent: string;
 }): string {
   return [
     "CONSULTATION REQUEST",
@@ -72,6 +78,10 @@ export function buildConsultationEmailText(data: {
     "NEXT STEP",
     "---------",
     "Reply to this email to follow up with the prospect.",
+    "",
+    "CONSENT",
+    "-------",
+    data.legalConsent,
     "",
     `Source: ${data.source}`,
   ].join("\n");

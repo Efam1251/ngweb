@@ -1,11 +1,12 @@
 import { useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
+import { LegalConsentField } from "@/components/contact/LegalConsentField";
 import { SERVICES } from "@/data/services";
 import { SITE } from "@/data/site";
 import { submitContactForm, type FormState } from "@/lib/submitContactForm";
 import { useI18n } from "@/i18n";
 
-type FormErrors = Partial<Record<keyof FormState, string>>;
+type FormErrors = Partial<Record<keyof FormState | "legalConsent", string>>;
 
 const INITIAL: FormState = {
   name: "",
@@ -25,6 +26,7 @@ const honeypotClass =
 export function ContactForm() {
   const { t, messages, locale } = useI18n();
   const [values, setValues] = useState<FormState>(INITIAL);
+  const [acceptedLegal, setAcceptedLegal] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
@@ -51,6 +53,7 @@ export function ContactForm() {
     if (!form.message.trim() || form.message.trim().length < 20) {
       next.message = t("contact.errMessage");
     }
+    if (!acceptedLegal) next.legalConsent = t("legal.errConsent");
     return next;
   };
 
@@ -75,9 +78,10 @@ export function ContactForm() {
           ? t("contact.other")
           : messages.services[values.service as keyof typeof messages.services]?.title ??
             values.service;
-      await submitContactForm(values, { serviceLabel, locale });
+      await submitContactForm(values, { serviceLabel, locale, acceptedLegal: true });
       setDone(true);
       setValues(INITIAL);
+      setAcceptedLegal(false);
     } catch (err) {
       setSubmitError(
         err instanceof Error
@@ -213,6 +217,12 @@ export function ContactForm() {
         ) : null}
       </label>
 
+      <LegalConsentField
+        checked={acceptedLegal}
+        onChange={setAcceptedLegal}
+        error={errors.legalConsent}
+      />
+
       {submitError ? (
         <p className="mt-4 rounded-sm border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
           {submitError}
@@ -222,7 +232,6 @@ export function ContactForm() {
       <Button type="submit" className="mt-6 w-full sm:w-auto" variant="gold" disabled={submitting}>
         {submitting ? t("contact.sending") : t("contact.submit")}
       </Button>
-      <p className="mt-3 text-xs text-muted">{t("contact.privacy")}</p>
     </form>
   );
 }

@@ -8,6 +8,7 @@ import { ResourcesPage } from "@/pages/ResourcesPage";
 import { VisaBulletinPage } from "@/pages/VisaBulletinPage";
 import { ContactPage } from "@/pages/ContactPage";
 import { CaseUpdatePage } from "@/pages/CaseUpdatePage";
+import { PrivacyPage, TermsPage } from "@/pages/LegalPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 import { I18nProvider, LocaleRedirect, isLocale, detectLocale, useI18n } from "@/i18n";
 
@@ -45,6 +46,8 @@ export default function App() {
           <Route path="news/:slug" element={<RedirectToVisaBulletin />} />
           <Route path="contact" element={<ContactPage />} />
           <Route path="case-update" element={<CaseUpdatePage />} />
+          <Route path="privacy" element={<PrivacyPage />} />
+          <Route path="terms" element={<TermsPage />} />
           <Route path="404" element={<NotFoundPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
