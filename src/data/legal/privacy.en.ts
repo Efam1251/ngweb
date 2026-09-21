@@ -121,7 +121,7 @@ export const privacyEn: LegalDocument = {
             "Cloudflare, which hosts this public website.",
             "Our email, hosting, backup, and document-storage providers that help us run the office system.",
             "Translators, medical exam providers, or other specialists you approve when a filing needs their work.",
-            "A lawyer or accredited representative if you ask us to involve one.",
+            "A licensed attorney or accredited representative if you ask us to involve one.",
           ],
         },
         {
@@ -234,7 +234,7 @@ export const privacyEn: LegalDocument = {
         },
         {
           type: "p",
-          text: "Documents we move to internal trash are purged after 90 days, unless a deletion request or legal hold says otherwise.",
+          text: "Documents we move to internal trash are purged after 90 days, unless a deletion request or a required hold says otherwise.",
         },
       ],
     },
@@ -298,7 +298,7 @@ export const privacyEn: LegalDocument = {
       blocks: [
         {
           type: "p",
-          text: "If you are a California resident, you have the right to know what personal information we collect, use, and share; to delete it, subject to legal exceptions; to correct it; to opt out of sale or sharing for cross-context advertising (we do not sell or share in that way); to limit the use of sensitive personal information to what is needed for the services you requested; and not to receive discriminatory treatment for exercising these rights.",
+          text: "If you are a California resident, you have the right to know what personal information we collect, use, and share; to delete it, except where we are required to keep it; to correct it; to opt out of sale or sharing for cross-context advertising (we do not sell or share in that way); to limit the use of sensitive personal information to what is needed for the services you requested; and not to receive discriminatory treatment for exercising these rights.",
         },
         {
           type: "p",

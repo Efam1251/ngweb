@@ -121,7 +121,7 @@ export const privacyEs: LegalDocument = {
             "Cloudflare, que aloja este sitio web público.",
             "Nuestros proveedores de correo, alojamiento, copias de seguridad y almacenamiento de documentos que ayudan a operar el sistema de oficina.",
             "Traductores, proveedores de examen médico u otros especialistas que usted apruebe cuando un trámite lo necesite.",
-            "Un abogado o representante acreditado si usted nos pide involucrarlo.",
+            "Un abogado con licencia o representante acreditado si usted nos pide involucrarlo.",
           ],
         },
         {
@@ -234,7 +234,7 @@ export const privacyEs: LegalDocument = {
         },
         {
           type: "p",
-          text: "Los documentos que movemos a la papelera interna se eliminan a los 90 días, salvo que una solicitud de borrado o una retención legal indiquen lo contrario.",
+          text: "Los documentos que movemos a la papelera interna se eliminan a los 90 días, salvo que una solicitud de borrado o una retención obligatoria indiquen lo contrario.",
         },
       ],
     },
@@ -298,7 +298,7 @@ export const privacyEs: LegalDocument = {
       blocks: [
         {
           type: "p",
-          text: "Si reside en California, tiene derecho a saber qué información personal recopilamos, usamos y compartimos; a eliminarla, con las excepciones legales; a corregirla; a oponerse a la venta o al intercambio para publicidad entre contextos (nosotros no vendemos ni compartimos de esa forma); a limitar el uso de información personal sensible a lo necesario para los servicios que pidió; y a no recibir un trato discriminatorio por ejercer estos derechos.",
+          text: "Si reside en California, tiene derecho a saber qué información personal recopilamos, usamos y compartimos; a eliminarla, salvo cuando debamos conservarla; a corregirla; a oponerse a la venta o al intercambio para publicidad entre contextos (nosotros no vendemos ni compartimos de esa forma); a limitar el uso de información personal sensible a lo necesario para los servicios que pidió; y a no recibir un trato discriminatorio por ejercer estos derechos.",
         },
         {
           type: "p",

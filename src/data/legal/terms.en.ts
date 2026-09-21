@@ -14,7 +14,7 @@ export const termsEn: LegalDocument = {
       blocks: [
         {
           type: "p",
-          text: `${SITE.name} provides immigration consulting and document-preparation support. We are not a law firm. We do not appear in immigration court. We do not create an attorney-client relationship by publishing this website or answering a first inquiry.`,
+          text: `${SITE.name} provides immigration consulting and document-preparation support. We are not a law firm. We do not appear in immigration court. Publishing this website or answering a first inquiry does not mean we become your attorney.`,
         },
         {
           type: "p",
@@ -154,11 +154,11 @@ export const termsEn: LegalDocument = {
     },
     {
       id: "governing-law",
-      title: "Governing law",
+      title: "Which rules apply",
       blocks: [
         {
           type: "p",
-          text: "These terms are governed by the laws of the State of New Hampshire, without regard to conflict-of-law rules. If a court finds a part of these terms unenforceable, the rest remains in effect.",
+          text: "These terms follow the rules of the State of New Hampshire. If a court finds a part of these terms unenforceable, the rest remains in effect.",
         },
       ],
     },

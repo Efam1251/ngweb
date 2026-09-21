@@ -14,7 +14,7 @@ export const termsEs: LegalDocument = {
       blocks: [
         {
           type: "p",
-          text: `${SITE.name} brinda consultoría de inmigración y apoyo en la preparación de documentos. No somos un bufete de abogados. No comparecemos en tribunales de inmigración. Publicar este sitio o responder una primera consulta no crea una relación abogado-cliente.`,
+          text: `${SITE.name} brinda consultoría de inmigración y apoyo en la preparación de documentos. No somos un bufete de abogados. No comparecemos en tribunales de inmigración. Publicar este sitio o responder una primera consulta no significa que nos convirtamos en su abogado.`,
         },
         {
           type: "p",
@@ -154,11 +154,11 @@ export const termsEs: LegalDocument = {
     },
     {
       id: "governing-law",
-      title: "Ley aplicable",
+      title: "Qué normas aplican",
       blocks: [
         {
           type: "p",
-          text: "Estos términos se rigen por las leyes del Estado de New Hampshire, sin aplicar normas de conflicto de leyes. Si un tribunal declara inaplicable una parte, el resto sigue vigente.",
+          text: "Estos términos siguen las normas del Estado de New Hampshire. Si un tribunal declara inaplicable una parte, el resto sigue vigente.",
         },
       ],
     },
